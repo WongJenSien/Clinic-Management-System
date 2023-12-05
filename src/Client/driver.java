@@ -16,6 +16,7 @@ public class driver {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("HIHI");
+        System.out.println("Can use mah");
     }
     
 }
