@@ -11,7 +11,7 @@ public class Runner {
     
     
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+         Scanner sc = new Scanner(System.in);
         String correctUsername = "Jennie";
         String correctPassword = "Abc123";
         String userName;
@@ -21,19 +21,26 @@ public class Runner {
             System.out.println("-----------------");
             System.out.println("| Patient Login |");
             System.out.println("-----------------");
+
             System.out.println("Username: ");
             userName = sc.nextLine();
 
             System.out.println("Password: ");
             password = sc.nextLine();
 
-            if (userName.equals(correctUsername) && password.equals(correctPassword)) {
+            if (isEmpty(userName) || isEmpty(password)) {
+                System.out.println("Error: Username or password cannot be empty. Please try again.");
+            } else if (userName.equals(correctUsername) && password.equals(correctPassword)) {
                 System.out.println("Login Successful!");
                 break; // Exit the loop if login is successful
             } else {
                 System.out.println("Incorrect Username and Password. Please try again.");
             }
         } while (true); // Infinite loop, will break out when login is successful
+    }
+
+    private static boolean isEmpty(String str) {
+        return str.trim().isEmpty();
     }
     
 }
