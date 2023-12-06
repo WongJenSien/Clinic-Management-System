@@ -54,8 +54,9 @@ public class driver {
             treatmentList.add(t[a]);
         }
 
-        clientProgram.medicalHeader();
-        clientProgram.displayTreatment();
+        clientProgram.treatmentMenu();
+        // clientProgram.medicalHeader();
+        // clientProgram.displayTreatment();
 
 
     }
