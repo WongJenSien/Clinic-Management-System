@@ -100,8 +100,8 @@ public class driver {
             String docName = doctor[Integer.parseInt(selection) - 1].getName();
             System.out.println("\n");
             int numOfRecord = 0;
-            System.out.println(String.format("%2s %-15s   %-25s   %-15s   %-27s", "ID", "Appointment No", "Patient Name", "Docter", "Date & Time"));
-            System.out.println(String.format("%2s %-15s   %-25s   %-15s   %-27s", "--", "--------------", "-------------------------", "---------------", "---------------------------"));
+            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "ID", "Appointment No", "Patient Name", "Docter", "Date & Time"));
+            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "--", "--------------", "-------------------------", "---------------", "---------------------------"));
             for (Appointment ap : appointment) {
                 if (ap.getDoctor().getName() == docName) {
                     System.out.println(String.format("%2s ", numOfRecord+1) + ap.toString());
@@ -109,7 +109,7 @@ public class driver {
                 }
             }
             if(numOfRecord == 0){
-                System.out.println("No Record Found.");
+                System.out.println("\nNo Record Found.");
             }else{
                 System.out.println("\nNumber Of Record: " + numOfRecord);
             }
