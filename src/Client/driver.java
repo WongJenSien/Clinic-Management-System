@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author jensienwong
+ * @author Tai Jun Xian
  */
 public class driver {
 
@@ -62,6 +62,7 @@ public class driver {
         Double price = 0.0;    
         int store = 0;
         String detail = "";
+        boolean stop = true;
         
         do {
             System.out.print("\nEnter the medicine name: ");
@@ -139,6 +140,7 @@ public class driver {
         System.out.printf("\nMedicien Name   : %s \nMedicien Price  : RM %3.2f \nMedicien Store  : %d \nMedicien Detail : %s\n",
                 name, price, store, detail);
 
+        do{
         System.out.print("\nIt is the information is you want added ? (Y/N) :");
         Character confirm = sc.next().toUpperCase().charAt(0);
         System.out.print("\n");
@@ -150,10 +152,15 @@ public class driver {
                 System.out.println("Completed Added");
                 System.out.print("\n");
                 displayAllMedicine();
+                return;
             }
-            case 'N' -> displayAllMedicine();
-            default -> System.out.println(ANSI_RED + "Please enter Y = Yes Or N = No." + ANSI_RESET);
+            case 'N' -> {
+                displayAllMedicine();
+                return;
+            }
+            default -> System.out.println(ANSI_RED + "Error: Invalid input. Please enter Y = Yes Or N = No." + ANSI_RESET);
         }
+        }while(true);
     }
     
     /**
