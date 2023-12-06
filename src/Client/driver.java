@@ -145,6 +145,7 @@ public class driver {
         Character confirm = sc.next().toUpperCase().charAt(0);
         System.out.print("\n");
         
+        
         switch (confirm) {
             case 'Y' -> {
                 Medicine medinice = new Medicine(name, price, store, detail);
