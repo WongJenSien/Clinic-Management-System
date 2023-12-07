@@ -9,14 +9,15 @@ Attandence: Tai Jun Xian Wong Jen Sien, Wong Hao Nam, Lai Xiao Cherk
 
 Appooinment
 ------------
-del doctor col in the view form
-add view appointment filter  (Pending appointment)
+  del doctor col in the view form
+  add view appointment filter  (Pending appointment)
 
 Tai
 ----
-Store => Quantity
-Less information 
-spelling errors
+  Store => Quantity
+  Less information 
+  spelling errors 
+
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣷⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⡿⣿⢿⣶⣄⣴⣿⠟⠋⠁⠀⠈⢿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣠⣾⣿⢳⡽⣎⡟⣾⣻⣯⠀⠀⠀⠀⠀⠀⠈⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀
