@@ -142,33 +142,6 @@ public class driver {
         return insertTreatment;
     }
 
-    // public Medicine insertMedicine() {
-
-    // Medicine[] allMedicine = new Medicine[medicineList.getNumberOfEntries()];
-    // for (int a = 1; a <= allMedicine.length; a++) {
-    // allMedicine[a - 1] = medicineList.getEntry(a);
-    // }
-
-    // int selection;
-
-    // do {
-    // validation = true;
-    // for (int y = 0; y < allMedicine.length; y++) {
-    // System.out.println(String.format("%d. %s", y + 1,
-    // allMedicine[y].getMedicine()));
-    // }
-    // System.out.println("Select a Medicine : ");
-    // selection = sc.nextInt();
-    // System.out.println("\n");
-
-    // if (selection > allMedicine.length || selection <= 0) {
-    // System.out.println("Please select a valid number");
-    // validation = false;
-    // }
-    // } while (!validation);
-
-    // return allMedicine[selection - 1];
-    // }
 
     public String insertDesc() {
         String insertDesc;
