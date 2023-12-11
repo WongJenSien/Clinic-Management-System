@@ -11,27 +11,28 @@ package entity;
 public class Treatment {
 
     private String treatment;
-    private Medicine medicine;
+    private String description;
     private String venue;
     private double price;
+
 
     public Treatment() {
     }
 
-    public Treatment(String treatment, Medicine medicine, String venue, double price) {
+    public Treatment(String treatment, String venue, double price,String description) {
         this.treatment = treatment;
-        this.medicine = medicine;
+        this.description = description;
         this.venue = venue;
         this.price = price;
     }
 
     //Setter
-    public void setMedicalServices(String treatment) {
+    public void setTreatmentServices(String treatment) {
         this.treatment = treatment;
     }
 
-    public void setMedicine(Medicine medicine) {
-        this.medicine = medicine;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setVenue(String venue) {
@@ -47,8 +48,8 @@ public class Treatment {
         return treatment;
     }
 
-    public Medicine getMedicine() {
-        return medicine;
+    public String description(){
+        return description;
     }
 
     public String getVenue() {
@@ -60,6 +61,6 @@ public class Treatment {
     }
 
     public String toString() {
-        return String.format("%-26s %-22s %-12s %.2f",treatment, medicine.getMedicine(), venue, price);
+        return String.format("%-26s %-12s %.2f %-20s",treatment, venue, price, description);
     }
 }
