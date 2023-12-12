@@ -60,8 +60,7 @@ public class driver {
         appointment[3] = new Appointment(timeSlot[3], patient[3], doctor[1]);
         appointment[4] = new Appointment(timeSlot[4], patient[4], doctor[1]);
 
-//        String selection;
-//        int number;
+
 //
 //        do {
 //            do {
