@@ -60,65 +60,65 @@ public class driver {
         appointment[3] = new Appointment(timeSlot[3], patient[3], doctor[1]);
         appointment[4] = new Appointment(timeSlot[4], patient[4], doctor[1]);
 
-        String selection;
-        int number;
-
-        do {
-            do {
-                number = 0;
-
-                System.out.println("View Doctor Schedule");
-                System.out.println("--------------------");
-
-                for (Doctor d : doctor) {
-                    String str = String.format("%d. %s", number + 1, d.getName());
-                    System.out.println(str);
-                    number++;
-                }
-                System.out.print("\nEnter a Number: ");
-                selection = sc.nextLine();
-
-               if(selection.equals("")){
-                    selection = "-1";
-                }
-
-                for (int a = 0; a < selection.length(); a++) {
-                    if (!Character.isDigit(selection.charAt(a))) {
-                        selection = "-1";
-                    }
-                }
-
-                if (Integer.parseInt(selection) > number || Integer.parseInt(selection) <= 0) {
-                    System.out.println("Please Enter a valid number\n");
-                }
-
-            } while (Integer.parseInt(selection) > number || Integer.parseInt(selection) <= 0);
-
-            
-            
-            
-            String docName = doctor[Integer.parseInt(selection) - 1].getName();
-            System.out.println("\n");
-            int numOfRecord = 0;
-            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "ID", "Appointment No", "Patient Name", "Docter", "Date & Time"));
-            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "--", "--------------", "-------------------------", "---------------", "---------------------------"));
-            for (Appointment ap : appointment) {
-                if (ap.getDoctor().getName() == docName) {
-                    System.out.println(String.format("%2s ", numOfRecord+1) + ap.toString());
-                    numOfRecord++;
-                }
-            }
-            if(numOfRecord == 0){
-                System.out.println("\nNo Record Found.");
-            }else{
-                System.out.println("\nNumber Of Record: " + numOfRecord);
-            }
-            
-
-            System.out.println("\n\nEnter 0 to Exit");
-            selection = sc.nextLine();
-            System.out.println("\n\n");
-
-        } while (!selection.equals("0"));
+//        String selection;
+//        int number;
+//
+//        do {
+//            do {
+//                number = 0;
+//
+//                System.out.println("View Doctor Schedule");
+//                System.out.println("--------------------");
+//
+//                for (Doctor d : doctor) {
+//                    String str = String.format("%d. %s", number + 1, d.getName());
+//                    System.out.println(str);
+//                    number++;
+//                }
+//                System.out.print("\nEnter a Number: ");
+//                selection = sc.nextLine();
+//
+//               if(selection.equals("")){
+//                    selection = "-1";
+//                }
+//
+//                for (int a = 0; a < selection.length(); a++) {
+//                    if (!Character.isDigit(selection.charAt(a))) {
+//                        selection = "-1";
+//                    }
+//                }
+//
+//                if (Integer.parseInt(selection) > number || Integer.parseInt(selection) <= 0) {
+//                    System.out.println("Please Enter a valid number\n");
+//                }
+//
+//            } while (Integer.parseInt(selection) > number || Integer.parseInt(selection) <= 0);
+//
+//            
+//            
+//            
+//            String docName = doctor[Integer.parseInt(selection) - 1].getName();
+//            System.out.println("\n");
+//            int numOfRecord = 0;
+//            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "ID", "Appointment No", "Patient Name", "Docter", "Date & Time"));
+//            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "--", "--------------", "-------------------------", "---------------", "---------------------------"));
+//            for (Appointment ap : appointment) {
+//                if (ap.getDoctor().getName() == docName) {
+//                    System.out.println(String.format("%2s ", numOfRecord+1) + ap.toString());
+//                    numOfRecord++;
+//                }
+//            }
+//            if(numOfRecord == 0){
+//                System.out.println("\nNo Record Found.");
+//            }else{
+//                System.out.println("\nNumber Of Record: " + numOfRecord);
+//            }
+//            
+//
+//            System.out.println("\n\nEnter 0 to Exit");
+//            selection = sc.nextLine();
+//            System.out.println("\n\n");
+//
+//        } while (!selection.equals("0"));
     }
 }
