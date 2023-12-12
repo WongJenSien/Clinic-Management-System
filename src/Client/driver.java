@@ -4,7 +4,6 @@
  */
 package Client;
 
-
 import adt_LXC.ArrayListLXC;
 import adt_LXC.ListInterfaceLXC;
 import entity.Treatment;
@@ -27,12 +26,11 @@ public class driver {
         // clientProgram.mainMenu();
 
         int index = 5;
-        
 
         Treatment[] t = new Treatment[index];
         t[0] = new Treatment("Blood Test", "Room B1000", 150, "hi this is a blood test");
-        t[1] = new Treatment("Covid Test",  "Room J0009",  100, "this s a covid test");
-        t[2] = new Treatment("X-ray", "Room Y00008", 250 , "this is x-ray");
+        t[1] = new Treatment("Covid Test", "Room J0009", 100, "this s a covid test");
+        t[2] = new Treatment("X-ray", "Room Y00008", 250, "this is x-ray");
         t[3] = new Treatment("Medical Check Up", "Room Z0002", 150, "this is medical body check up");
         t[4] = new Treatment("Physiotherapy", "Room R00002", 300, "this is physiotheraphy");
 
@@ -124,7 +122,7 @@ public class driver {
         String addVenue = insertVenue();
         double addPrice = insertPrice();
         String addDesc = insertDesc();
-        Treatment addTreatmentService = new Treatment(addTreatment, addVenue, addPrice , addDesc);
+        Treatment addTreatmentService = new Treatment(addTreatment, addVenue, addPrice, addDesc);
         treatmentList.add(addTreatmentService);
         System.out.println("\n Treatment added successfully!\n");
         treatmentMenu();
@@ -141,7 +139,6 @@ public class driver {
         } while (!validation);
         return insertTreatment;
     }
-
 
     public String insertDesc() {
         String insertDesc;
@@ -192,7 +189,7 @@ public class driver {
 
     public void updateTreatment() {
 
-        String[] updateMenu = { "Treatment Name","Venue", "Price", "Description", "Back" };
+        String[] updateMenu = { "Treatment Name", "Venue", "Price", "Description", "Back" };
         int choice;
 
         // display update menu
@@ -254,27 +251,43 @@ public class driver {
     }
 
     public void removeTreatment() {
-        medicalHeader();
-        for (int x = 1; x <= treatmentList.getNumberOfEntries(); x++) {
-            System.out.println(" " + x + ". " + treatmentList.getEntry(x));
-        }
-        System.out.println("Please select a treatment you want to remove: ");
-        int removeTreatment = sc.nextInt();
-        System.out.println(treatmentList.getEntry(removeTreatment));
-        System.out.println("Press y to delete the treatment: ");
-        char confirmation = sc.next().toUpperCase().charAt(0);
+        char confirmation;
+        do {
+            medicalHeader();
 
-        if (confirmation == 'Y') {
+            for (int x = 1; x <= treatmentList.getNumberOfEntries(); x++) {
+                System.out.println(" " + x + ". " + treatmentList.getEntry(x));
+            }
 
-            treatmentList.remove(removeTreatment);
-            displayTreatment();
-            System.out.println("\n");
-        } else {
-            displayTreatment();
-            System.out.println("\n");
-        }
+            int removeTreatment;
 
-        treatmentMenu();
+            do {
+                // Display the message only if the flag is true
+
+                System.out.println("Please select a treatment you want to remove: ");
+                removeTreatment = sc.nextInt();
+
+                // Validate input range
+                if (removeTreatment < 1 || removeTreatment > treatmentList.getNumberOfEntries()) {
+                    System.out.println("Invalid selection. Please enter a valid option.");
+                }
+
+            } while (removeTreatment < 1 || removeTreatment > treatmentList.getNumberOfEntries());
+
+            System.out.println(treatmentList.getEntry(removeTreatment));
+            System.out.println("Press y to delete the treatment: ");
+            confirmation = sc.next().toUpperCase().charAt(0);
+
+            if (confirmation == 'Y') {
+
+                treatmentList.remove(removeTreatment);
+                displayTreatment();
+
+            } else {
+                displayTreatment();
+            }
+        } while (confirmation == 'N');
+
     }
 
 }
