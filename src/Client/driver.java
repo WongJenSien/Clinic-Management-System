@@ -37,12 +37,12 @@ public class driver {
             medicineList.add(m1);
         }
         
-        clientProgram.addMedicine();
+        clientProgram.addStoreMedicine();
     }
     
     //Display Medicine List
     private void displayAllMedicine() {
-        System.out.printf("ID.   %-17s %9s %8s \n", "Title", "Price", "Store");
+        System.out.printf("\n\nID.   %-17s %9s %8s \n", "Title", "Price", "Store");
         for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
             Medicine allMedicine = medicineList.getEntry(i);
             String medicine = allMedicine.getMedicine();
@@ -50,9 +50,93 @@ public class driver {
             int Store = allMedicine.getStore();
             System.out.printf(" %d.   %-16s  RM %6.2f  %5d\n", i, medicine, price, Store);
         }
-        System.out.println("\n");
+        
     }
+    //Add Medicine Store Function
+    @SuppressWarnings("empty-statement")
+    private void addStoreMedicine() {
+        int id = 0;
+        
+        do {
+            displayAllMedicine();
+            System.out.print("\nWhich Medicine you want add store ?(Exit:0): ");
+            String input = sc.nextLine().trim();
 
+            // Check if the input is not empty
+            if (input.isEmpty()) {
+                System.out.println(ANSI_RED  +  "Error : Selection cannot be empty. Please enter a valid integer." + ANSI_RESET + ANSI_RESET);
+            } else if ("0".equals(input)) {
+                addStoreMedicine();
+            } else {
+                try {
+                    // Try to parse the input as an integer
+                    id = Integer.parseInt(input);
+
+                    if (id > medicineList.getNumberOfEntries() || id < medicineList.getNumberOfEntries()) {
+                        System.out.println(ANSI_RED + "Error: Selection cannot be other than the medicine ID list. Please enter a valid ID number." + ANSI_RESET);
+                    }
+
+                    for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
+                        if (id == i) {
+                            Medicine showMedicine = medicineList.getEntry(i);
+                            String medicine = showMedicine.getMedicine();
+                            double price = showMedicine.getPrice();
+                            int store = showMedicine.getStore();
+                            String detail = showMedicine.getDetail();
+                            System.out.printf("Medicien : %s \nPrice    : RM %3.2f \nStore    : %d \n", medicine, price, store );
+
+                            do {
+                                System.out.print("\nHow much amount you want to add ?(Exit:0): ");
+                                input = sc.nextLine().trim();
+
+                                // Check if the input is not empty
+                                if (input.isEmpty()) {
+                                    System.out.println(ANSI_RED + "Error : The amount cannot be empty. Please enter a valid input." + ANSI_RESET + ANSI_RESET);
+                                } else if ("0".equals(input)) {
+                                    addStoreMedicine();
+                                    for (int j = 0; j < 75; j++){
+                                            System.out.print("-");
+                                    }
+                                } else {
+                                    try {
+                                        // Try to parse the input as an integer
+                                        int num = Integer.parseInt(input);
+                                        store += num;
+                                        
+                                        if (store < 0) {
+                                            System.out.println(ANSI_RED + "Error : The total store cannot be less than 0. Please enter a correct value." + ANSI_RESET);
+                                            store -= num;
+                                        } else {
+                                            medicineList.replace(i, new Medicine(medicine, price, store, detail));
+
+                                            System.out.printf("\nCompleted Added . Now %s store is %d .", medicine, store);
+                                            displayAllMedicine();
+                                            for (int j = 0; j < 75; j++) {
+                                                System.out.print("-");
+                                            }
+                                            break;
+                                        }
+
+                                    } catch (NumberFormatException e) {
+                                        // Handle the case where the input is not a valid integer
+                                        System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid integer amount." + ANSI_RESET);
+                                    }
+                                }
+                            } while (true);
+
+                            
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    // Handle the case where the input is not a valid integer
+                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid integer." + ANSI_RESET);
+                }
+            }
+        } while (true);
+       
+    }
+    
+    
     //Add Function
     private void addMedicine() {
         int i;
@@ -234,51 +318,6 @@ public class driver {
 //        doctorMedicine();
 //    }
 //
-//    //Add Medicine Store Function
-//    private void addStoreMedicine() {
-//        boolean correction = true;
-//        displayAllMedicine();
-//
-//        System.out.println("\nWhich Medicine you want add store ?(Exit:0) :");
-//        int selection = sc.nextInt();
-//        System.out.print("\n");
-//
-//        if (selection > medicineList.getNumberOfEntries()) {
-//            System.out.println("Selection error,please select again");
-//            addStoreMedicine();
-//        } else if (selection == 0) {
-//            doctorMedicine();
-//        }
-//
-//        for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
-//            if (selection == i) {
-//                Medicine showMedicine = medicineList.getEntry(i);
-//                String medicine = showMedicine.getMedicine();
-//                double price = showMedicine.getPrice();
-//                int store = showMedicine.getStore();
-//                String detail = showMedicine.getDetail();
-//                System.out.printf("Medicien : %s \nPrice    :RM %3.2f \nStore    : %d \n", medicine, price, store);
-//
-//                do {
-//                    System.out.print("\n");
-//                    System.out.print("How much amount you want to add ? : ");
-//                    selection = sc.nextInt();
-//                    if (String.valueOf(selection).isEmpty()) {
-//                        System.out.println("Please enter amount. Thank You. : \n");
-//                        correction = false;
-//                    } else {
-//                        store += selection;
-//                        medicineList.replace(i, new Medicine(medicine, price, store, detail));
-//                    }
-//
-//                } while (correction == false);
-//
-//                System.out.printf("\nCompleted Added . Now %s store is %d .\n", medicine, store);
-//                System.out.println("\n");
-//                doctorMedicine();
-//            }
-//        }
-//    }
 //
 //    //Update Medicine Function
 //    private void updateMedicine() {
