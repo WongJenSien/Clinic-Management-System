@@ -42,7 +42,7 @@ public class driver {
     
     //Display Medicine List
     private void displayAllMedicine() {
-        System.out.printf("\n\nID.   %-17s %9s %8s \n", "Title", "Price", "Store");
+        System.out.printf("\n\nID.   %-17s %9s %8s \n", "Title", "Price", "Quantity");
         for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
             Medicine allMedicine = medicineList.getEntry(i);
             String medicine = allMedicine.getMedicine();
@@ -53,18 +53,17 @@ public class driver {
         
     }
     //Add Medicine Store Function
-    @SuppressWarnings("empty-statement")
     private void addStoreMedicine() {
         int id = 0;
         
         do {
             displayAllMedicine();
-            System.out.print("\nWhich Medicine you want add store ?(Exit:0): ");
+            System.out.print("\nWhich Medicine you want add quantity ?(Exit:0): ");
             String input = sc.nextLine().trim();
 
             // Check if the input is not empty
             if (input.isEmpty()) {
-                System.out.println(ANSI_RED  +  "Error : Selection cannot be empty. Please enter a valid integer." + ANSI_RESET + ANSI_RESET);
+                System.out.println(ANSI_RED  +  "Error : Selection cannot be empty. Please enter a valid integer." + ANSI_RESET + ANSI_RESET );
             } else if ("0".equals(input)) {
                 addStoreMedicine();
             } else {
@@ -83,15 +82,15 @@ public class driver {
                             double price = showMedicine.getPrice();
                             int store = showMedicine.getStore();
                             String detail = showMedicine.getDetail();
-                            System.out.printf("Medicien : %s \nPrice    : RM %3.2f \nStore    : %d \n", medicine, price, store );
+                            System.out.printf("Medicien : %s \nPrice    : RM %3.2f \nQuantity    : %d \n", medicine, price, store );
 
                             do {
-                                System.out.print("\nHow much amount you want to add ?(Exit:0): ");
+                                System.out.print("\nHow much quantity you want to add ?(Exit:0): ");
                                 input = sc.nextLine().trim();
 
                                 // Check if the input is not empty
                                 if (input.isEmpty()) {
-                                    System.out.println(ANSI_RED + "Error : The amount cannot be empty. Please enter a valid input." + ANSI_RESET + ANSI_RESET);
+                                    System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET + ANSI_RESET);
                                 } else if ("0".equals(input)) {
                                     addStoreMedicine();
                                     for (int j = 0; j < 75; j++){
@@ -104,12 +103,12 @@ public class driver {
                                         store += num;
                                         
                                         if (store < 0) {
-                                            System.out.println(ANSI_RED + "Error : The total store cannot be less than 0. Please enter a correct value." + ANSI_RESET);
+                                            System.out.println(ANSI_RED + "Error : The total quantity cannot be less than 0. Please enter a correct value." + ANSI_RESET);
                                             store -= num;
                                         } else {
                                             medicineList.replace(i, new Medicine(medicine, price, store, detail));
 
-                                            System.out.printf("\nCompleted Added . Now %s store is %d .", medicine, store);
+                                            System.out.printf("\nCompleted Added . Now %s quantity is %d .", medicine, store);
                                             displayAllMedicine();
                                             for (int j = 0; j < 75; j++) {
                                                 System.out.print("-");
@@ -119,7 +118,7 @@ public class driver {
 
                                     } catch (NumberFormatException e) {
                                         // Handle the case where the input is not a valid integer
-                                        System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid integer amount." + ANSI_RESET);
+                                        System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid quantity." + ANSI_RESET);
                                     }
                                 }
                             } while (true);
@@ -129,7 +128,7 @@ public class driver {
                     }
                 } catch (NumberFormatException e) {
                     // Handle the case where the input is not a valid integer
-                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid integer." + ANSI_RESET);
+                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid medicine ID." + ANSI_RESET);
                 }
             }
         } while (true);
