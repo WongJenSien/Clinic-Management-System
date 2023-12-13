@@ -9,6 +9,7 @@ import Entity.Doctor;
 import Entity.DutySchedule;
 import Entity.Patient;
 import Entity.Time;
+import Entity.Treatment;
 import java.util.*;
 
 /**
@@ -20,16 +21,230 @@ public class driver {
     /**
      * @param args the command line arguments
      */
+    public static Scanner sc = new Scanner(System.in);
+    public static Time[] time = new Time[5];
+    public static DutySchedule[] timeSlot = new DutySchedule[5];
+    public static Appointment[] appointment = new Appointment[100];
+    public static Patient[] patient = new Patient[5];
+    public static Doctor[] doctor = new Doctor[5];
+    public static Treatment[] treatment = new Treatment[5];
+
     public static void main(String[] args) {
         // TODO code application logic here
-        Scanner sc = new Scanner(System.in);
+        preInfo();
 
-        Time[] time = new Time[5];
-        DutySchedule[] timeSlot = new DutySchedule[5];
-        Appointment[] appointment = new Appointment[5];
-        Patient[] patient = new Patient[5];
-        Doctor[] doctor = new Doctor[5];
+        int day = 0, years = 0, selection;
+        String month = "";
+        boolean result = true;
+        String num;
 
+        Appointment[] array = appointment;
+        Time[] bookedTimeSlot = new Time[time.length];
+        Time[] validTimeSlot = new Time[time.length];
+
+        Patient user = patient[0];
+        DutySchedule duty = new DutySchedule();
+        Time selectedTime = new Time();
+        Treatment selectedTreatment = new Treatment();
+        Doctor selectedDoctor = new Doctor();
+
+        int index;
+
+        // Input Date
+        do {
+            for (int a = 0; a < time.length; a++) {
+                bookedTimeSlot[a] = null;
+                validTimeSlot[a] = null;
+            }
+            do {
+
+                // Display error message
+                if (result) {
+                    System.out.println("\n\nExample");
+                    System.out.println("+--------------------------------------+");
+                    System.out.println("|        Enter Date: 1 JAN 2022        |");
+                    System.out.println("+--------------------------------------+\n\n");
+                } else {
+                    System.out.println("Invalid Date Please Enter Again");
+                }
+
+                //Capture Date Input
+                System.out.print("Enter Date : ");
+
+                String date = sc.nextLine();
+
+                num = "";
+                int repeat = 1;
+
+                //Define the Date, Month and Years
+                for (int a = 0; a < date.length(); a++) {
+
+                    if (date.charAt(a) == ' ') {
+                        switch (repeat) {
+                            case 1:
+                                day = Integer.parseInt(num);
+                                num = "";
+                                repeat++;
+                                break;
+                            case 2:
+                                month = num;
+                                num = "";
+                                repeat++;
+                                break;
+                        }
+                    } else {
+                        num += date.charAt(a);
+                    }
+                }
+
+                years = Integer.parseInt(num);
+                month = month.toUpperCase();
+
+                // Check Date Validation
+                duty = new DutySchedule(day, month, years);
+                result = duty.checkValidDate();
+
+                //True == Valid Date
+                //Fasel == Invalid Date
+            } while (!result);
+            System.out.println("\n");
+
+            // Show Valid Date
+            // check Date 
+            index = 0;
+            for (int a = 0; a < array.length; a++) {
+                if (array[a] == null) {
+                    break;
+                }
+                int apDay = array[a].getDutySchedule().getDay();
+                String apMonth = array[a].getDutySchedule().getMonth();
+                int apYear = array[a].getDutySchedule().getYears();
+
+                if (apDay == day && apMonth.equals(month) && apYear == years) {
+                    //same day
+                    for (int b = 0; b < time.length; b++) {
+                        if (time[b].equals(array[a].getDutySchedule().getTimeSlot())) {
+                            bookedTimeSlot[b] = time[b];
+
+                        }
+                    }
+
+                }
+            }
+            index = 0;
+
+            for (int b = 0; b < time.length; b++) {
+                if (bookedTimeSlot[b] != null) {
+                    index++;
+                }
+            }
+
+            if (index == time.length) {
+                System.out.println("Time Slot in the day is full.");
+                System.out.print("Press Enter to Continue...");
+                sc.nextLine();
+                index = 0;
+            } else {
+                index = 0;
+
+                for (int a = 0; a < time.length; a++) {
+                    if (bookedTimeSlot[a] == null) {
+                        validTimeSlot[index] = time[a];
+                        index++;
+                    }
+                }
+                do {
+
+                    for (int a = 0; a < index; a++) {
+                        if (validTimeSlot[a] != null) {
+                            System.out.println(String.format("%2d. %s", a + 1, validTimeSlot[a]));
+                        }
+                    }
+
+                    System.out.print("\nSelect a Time Slot : ");
+                    selection = sc.nextInt();
+
+                    if (selection > index || selection < 0) {
+                        System.out.println("Please enter a valid number...\n");
+                    }
+
+                } while (selection > index || selection < 0);
+
+                selectedTime = validTimeSlot[selection - 1];
+            }
+
+        } while (index == 0);
+        duty = new DutySchedule(day, month, years, selectedTime);
+
+        //Retrieve All the Treatment and Store into allTreatment
+        System.out.println("\n\n=======================================================");
+        System.out.println("|No. |Medical Service Name      |Venue       |Price   |");
+        System.out.println("=======================================================");
+
+        do {
+            //Select Select Treatment
+            for (int a = 0; a < treatment.length; a++) {
+                System.out.println(String.format("%2d. %s", a + 1, treatment[a]));
+            }
+            System.out.print("\nEnter your selection : ");
+            selection = sc.nextInt();
+
+            if (selection > treatment.length || selection < 0) {
+                System.out.println("Please enter a valid number...\n");
+            }
+
+        } while (selection > treatment.length || selection < 0);
+
+        selectedTreatment = treatment[selection - 1];
+        System.out.println("\n\n");
+        do {
+            //Select Select Treatment
+            for (int a = 0; a < doctor.length; a++) {
+                System.out.println(String.format("%2d. %s", a + 1, doctor[a].getName()));
+            }
+            System.out.print("\nEnter your selection : ");
+            selection = sc.nextInt();
+
+            if (selection > doctor.length || selection < 0) {
+                System.out.println("Please enter a valid number...\n");
+            }
+
+        } while (selection > doctor.length || selection < 0);
+        selectedDoctor = doctor[selection - 1];
+
+        System.out.println("\n\nAppointment Information");
+        System.out.println("------------------------");
+        System.out.println("User: " + user.getName() + " (" + user.getStudentID() + ")");
+        System.out.println("Date: " + duty.getDay() + " " + duty.getMonth() + " " + duty.getYears() + " (" + duty.getTimeSlot() + ")");
+        System.out.println("Doctor: " + selectedDoctor.getName());
+        System.out.println("Treatment: " + selectedTreatment.getTreatment() + " (" + selectedTreatment.getVenue() + ")");
+
+        System.out.print("\nMake Appointment ? ( Y = yes ) :");
+        String answer = sc.next();
+
+        if (answer.equals("Y") || answer.equals("y")) {
+            for (int a = 0; a < appointment.length; a++) {
+                if (appointment[a] == null) {
+                    appointment[a] = new Appointment(duty, user, selectedDoctor, selectedTreatment);
+                    System.out.println("New Appointment Added Successfully");
+                    break;
+                }
+            }
+        } else {
+            System.out.println("New Appointment Added Failed");
+        }
+
+        System.out.println("\n\nView Appointment");
+        System.out.println("----------------");
+        for (int a = 0; a < appointment.length; a++) {
+            if (appointment[a] != null && appointment[a].getPatient().getStudentID().equals(user.getStudentID())) {
+                System.out.println(appointment[a]);
+            }
+        }
+
+    }
+
+    public static void preInfo() {
         time[0] = new Time(800, 1000);
         time[1] = new Time(1000, 1200);
         time[2] = new Time(1200, 1400);
@@ -37,7 +252,7 @@ public class driver {
         time[4] = new Time(1600, 1800);
 
         timeSlot[0] = new DutySchedule(1, "JAN", 2022, time[0]);
-        timeSlot[1] = new DutySchedule(1, "JAN", 2022, time[1]);
+        timeSlot[1] = new DutySchedule(2, "JAN", 2022, time[1]);
         timeSlot[2] = new DutySchedule(1, "JAN", 2022, time[2]);
         timeSlot[3] = new DutySchedule(1, "JAN", 2022, time[3]);
         timeSlot[4] = new DutySchedule(1, "JAN", 2022, time[4]);
@@ -54,70 +269,17 @@ public class driver {
         doctor[3] = new Doctor("John", 50, "M");
         doctor[4] = new Doctor("Fatimah", 30, "F");
 
-        appointment[0] = new Appointment(timeSlot[0], patient[0], doctor[0]);
-        appointment[1] = new Appointment(timeSlot[1], patient[1], doctor[1]);
-        appointment[2] = new Appointment(timeSlot[2], patient[2], doctor[1]);
-        appointment[3] = new Appointment(timeSlot[3], patient[3], doctor[1]);
-        appointment[4] = new Appointment(timeSlot[4], patient[4], doctor[1]);
+        treatment[0] = new Treatment("Blood Test", "Room B1000", 150);
+        treatment[1] = new Treatment("Covid Test", "Room J0009", 100);
+        treatment[2] = new Treatment("X-ray", "Room Y00008", 250);
+        treatment[3] = new Treatment("Body Check Up", "Room Z0002", 150);
+        treatment[4] = new Treatment("Physiotherapy", "Room R00002", 300);
 
+        appointment[0] = new Appointment(timeSlot[0], patient[0], doctor[0], treatment[0]);
+        appointment[1] = new Appointment(timeSlot[1], patient[1], doctor[1], treatment[0]);
+        appointment[2] = new Appointment(timeSlot[2], patient[2], doctor[1], treatment[0]);
+        appointment[3] = new Appointment(timeSlot[3], patient[3], doctor[1], treatment[0]);
+        appointment[4] = new Appointment(timeSlot[4], patient[4], doctor[1], treatment[0]);
 
-//
-//        do {
-//            do {
-//                number = 0;
-//
-//                System.out.println("View Doctor Schedule");
-//                System.out.println("--------------------");
-//
-//                for (Doctor d : doctor) {
-//                    String str = String.format("%d. %s", number + 1, d.getName());
-//                    System.out.println(str);
-//                    number++;
-//                }
-//                System.out.print("\nEnter a Number: ");
-//                selection = sc.nextLine();
-//
-//               if(selection.equals("")){
-//                    selection = "-1";
-//                }
-//
-//                for (int a = 0; a < selection.length(); a++) {
-//                    if (!Character.isDigit(selection.charAt(a))) {
-//                        selection = "-1";
-//                    }
-//                }
-//
-//                if (Integer.parseInt(selection) > number || Integer.parseInt(selection) <= 0) {
-//                    System.out.println("Please Enter a valid number\n");
-//                }
-//
-//            } while (Integer.parseInt(selection) > number || Integer.parseInt(selection) <= 0);
-//
-//            
-//            
-//            
-//            String docName = doctor[Integer.parseInt(selection) - 1].getName();
-//            System.out.println("\n");
-//            int numOfRecord = 0;
-//            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "ID", "Appointment No", "Patient Name", "Docter", "Date & Time"));
-//            System.out.println(String.format("%2s %-15s  %-25s   %-15s   %-27s", "--", "--------------", "-------------------------", "---------------", "---------------------------"));
-//            for (Appointment ap : appointment) {
-//                if (ap.getDoctor().getName() == docName) {
-//                    System.out.println(String.format("%2s ", numOfRecord+1) + ap.toString());
-//                    numOfRecord++;
-//                }
-//            }
-//            if(numOfRecord == 0){
-//                System.out.println("\nNo Record Found.");
-//            }else{
-//                System.out.println("\nNumber Of Record: " + numOfRecord);
-//            }
-//            
-//
-//            System.out.println("\n\nEnter 0 to Exit");
-//            selection = sc.nextLine();
-//            System.out.println("\n\n");
-//
-//        } while (!selection.equals("0"));
     }
 }
