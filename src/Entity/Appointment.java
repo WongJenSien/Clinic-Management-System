@@ -14,17 +14,16 @@ public class Appointment {
     public Patient patient;
     public Doctor doctor;
     public DutySchedule timeSlot;
-    
-    
-   
+    public Treatment treatment;
+
     public static int number = 0;
 
     public Appointment() {
     }
 
-    public Appointment(DutySchedule timeSlot, Patient p, Doctor d) {
+    public Appointment(DutySchedule timeSlot, Patient p, Doctor d, Treatment treatment) {
         this.timeSlot = timeSlot;
-
+        this.treatment = treatment;
         patient = p;
         doctor = d;
         appointmentNumber = appointmentNoGenerator();
@@ -48,7 +47,6 @@ public class Appointment {
         return doctor;
     }
 
-
     //Setter
     public void setDutySchedule(DutySchedule timeSlot) {
         timeSlot = timeSlot;
@@ -58,10 +56,9 @@ public class Appointment {
         patient = p;
     }
 
-
     //toString
     public String toString() {
-        return String.format("%-14s   %-15s (%-5s)   %-15s   %s", appointmentNumber, patient.getName(), patient.getStudentID(), doctor.getName(), timeSlot);
+        return String.format("%-14s   %-15s (%-5s)   %-15s   %27s %s (%s)", appointmentNumber, patient.getName(), patient.getStudentID(), doctor.getName(), timeSlot, treatment.getTreatment(), treatment.getVenue());
     }
 
     public String appointmentNoGenerator() {
