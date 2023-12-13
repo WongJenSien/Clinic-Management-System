@@ -65,7 +65,7 @@ public class driver {
                     System.out.println("|        Enter Date: 1 JAN 2022        |");
                     System.out.println("+--------------------------------------+\n\n");
                 } else {
-                    System.out.println("Invalid Date Please Enter Again");
+                    System.out.println("Invalid Date Please Enter Again\n");
                 }
 
                 //Capture Date Input
@@ -77,33 +77,55 @@ public class driver {
                 int repeat = 1;
 
                 //Define the Date, Month and Years
-                for (int a = 0; a < date.length(); a++) {
+                if (!date.isEmpty()) {
 
-                    if (date.charAt(a) == ' ') {
-                        switch (repeat) {
-                            case 1:
-                                day = Integer.parseInt(num);
-                                num = "";
-                                repeat++;
-                                break;
-                            case 2:
+                    for (int a = 0; a < date.length(); a++) {
+
+                        if (date.charAt(a) == ' ') {
+                            switch (repeat) {
+                                case 1:
+                                    day = Integer.parseInt(num);
+                                    num = "";
+                                    repeat++;
+                                    break;
+                                case 2:
+                                    month = num;
+                                    num = "";
+                                    repeat++;
+                                    break;
+                            }
+                        } else {
+                            if (repeat == 1) {
+                                if (Character.isDigit(date.charAt(a))) {
+                                    num += date.charAt(a);
+                                } else {
+                                    num = "0";
+                                }
+
+                            } else if (repeat == 2) {
+                                num += date.charAt(a);
                                 month = num;
-                                num = "";
-                                repeat++;
-                                break;
+                            } else {
+                                num += date.charAt(a);
+                            }
+
                         }
-                    } else {
-                        num += date.charAt(a);
                     }
+                    for(int a = 0 ; a < num.length() ; a++){
+                    if(!Character.isDigit(num.charAt(a))){
+                        num = "0";
+                    }
+                    }
+
+                    years = Integer.parseInt(num);
+                    month = month.toUpperCase();
+
+                    // Check Date Validation
+                    duty = new DutySchedule(day, month, years);
+                    result = duty.checkValidDate();
+                } else {
+                    result = false;
                 }
-
-                years = Integer.parseInt(num);
-                month = month.toUpperCase();
-
-                // Check Date Validation
-                duty = new DutySchedule(day, month, years);
-                result = duty.checkValidDate();
-
                 //True == Valid Date
                 //Fasel == Invalid Date
             } while (!result);
@@ -219,19 +241,19 @@ public class driver {
         System.out.println("Doctor: " + selectedDoctor.getName());
         System.out.println("Treatment: " + selectedTreatment.getTreatment() + " (" + selectedTreatment.getVenue() + ")");
 
-        System.out.print("\nMake Appointment ? ( Y = yes ) :");
+        System.out.print("\nConfirm Apppintment Information ? ( Y = yes ) :");
         String answer = sc.next();
 
         if (answer.equals("Y") || answer.equals("y")) {
             for (int a = 0; a < appointment.length; a++) {
                 if (appointment[a] == null) {
                     appointment[a] = new Appointment(duty, user, selectedDoctor, selectedTreatment);
-                    System.out.println("New Appointment Added Successfully");
+                    System.out.println("\nNew Appointment Added Successfully");
                     break;
                 }
             }
         } else {
-            System.out.println("New Appointment Added Failed");
+            System.out.println("\nNew Appointment Added Failed");
         }
 
         System.out.println("\n\nView Appointment");
