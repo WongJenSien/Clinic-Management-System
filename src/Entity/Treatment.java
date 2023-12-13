@@ -18,6 +18,12 @@ public class Treatment {
     public Treatment() {
     }
 
+    public Treatment(String treatment, String venue, double price) {
+        this.treatment = treatment;
+        this.venue = venue;
+        this.price = price;
+    }
+
     public Treatment(String treatment, Medicine medicine, String venue, double price) {
         this.treatment = treatment;
         this.medicine = medicine;
@@ -60,6 +66,6 @@ public class Treatment {
     }
 
     public String toString() {
-        return String.format("%-26s %-22s %-12s %.2f",treatment, medicine.getMedicine(), venue, price);
+        return String.format("%-26s %-12s %.2f", treatment, venue, price);
     }
 }
