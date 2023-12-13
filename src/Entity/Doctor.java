@@ -67,7 +67,11 @@ public class Doctor {
 
     //ToString
     public String toString() {
-        return String.format("%20s %15d %37s %10s %20s", name, age, representative.getTreatment(), gender, representative.getVenue());
+        return String.format("%20s %15d %10s", name, age, gender);
     }
+//
+//    public String toString() {
+//        return String.format("%20s %15d %37s %10s %20s", name, age, representative.getTreatment(), gender, representative.getVenue());
+//    }
 
 }
