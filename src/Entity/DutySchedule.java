@@ -79,69 +79,54 @@ public class DutySchedule {
     //METHOD
     public boolean checkValidDate() {
         int word = 0;
+        if (years == 0) {
+            return false;
+        }
+
         switch (month) {
-            case "JAN":
+            case "JAN" ->
                 word = 1;
-                break;
-            case "FEB":
+            case "FEB" ->
                 word = 2;
-                break;
-            case "MAR":
+            case "MAR" ->
                 word = 3;
-                break;
-            case "APR":
+            case "APR" ->
                 word = 4;
-                break;
-            case "MAY":
+            case "MAY" ->
                 word = 5;
-                break;
-            case "JUN":
+            case "JUN" ->
                 word = 6;
-                break;
-            case "JUL":
+            case "JUL" ->
                 word = 7;
-                break;
-            case "AUG":
+            case "AUG" ->
                 word = 8;
-                break;
-            case "SEP":
+            case "SEP" ->
                 word = 9;
-                break;
-            case "OCT":
+            case "OCT" ->
                 word = 10;
-                break;
-            case "NOV":
+            case "NOV" ->
                 word = 11;
-                break;
-            case "DEC":
+            case "DEC" ->
                 word = 12;
-                break;
 
         }
 
         switch (word) {
-            case 4:
-            case 6:
-            case 9:
-            case 11:
+            case 4, 6, 9, 11 -> {
                 if (day <= 30) {
                     return true;
                 } else {
                     return false;
                 }
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
+            }
+            case 1, 3, 5, 7, 8, 10, 12 -> {
                 if (day <= 31) {
                     return true;
                 } else {
                     return false;
                 }
-            case 2:
+            }
+            case 2 -> {
                 if (years / 4 == 0) {
                     if (day <= 29) {
                         return true;
@@ -155,9 +140,12 @@ public class DutySchedule {
                         return false;
                     }
                 }
-            default:
+            }
+            default -> {
                 return false;
+            }
         }
+
     }
 
     //ToString
