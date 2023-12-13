@@ -74,7 +74,8 @@ public class driver {
                     if (id > medicineList.getNumberOfEntries() || id < medicineList.getNumberOfEntries()) {
                         System.out.println(ANSI_RED + "Error: Selection cannot be other than the medicine ID list. Please enter a valid ID number." + ANSI_RESET);
                     }
-
+ 
+                    
                     for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
                         if (id == i) {
                             Medicine showMedicine = medicineList.getEntry(i);
