@@ -30,7 +30,7 @@ public class Appointment {
 
     }
 
-//Getter
+    //Getter
     public DutySchedule getDutySchedule() {
         return timeSlot;
     }
@@ -47,9 +47,21 @@ public class Appointment {
         return doctor;
     }
 
+    public Treatment getTreatment() {
+        return treatment;
+    }
+
     //Setter
     public void setDutySchedule(DutySchedule timeSlot) {
         timeSlot = timeSlot;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 
     public void setPatient(Patient p) {
@@ -61,9 +73,11 @@ public class Appointment {
         return String.format("%-14s   %-15s (%-5s)   %-15s   %27s %s (%s)", appointmentNumber, patient.getName(), patient.getStudentID(), doctor.getName(), timeSlot, treatment.getTreatment(), treatment.getVenue());
     }
 
+    //METHOD
     public String appointmentNoGenerator() {
         String appointmentNumber = String.format("%s%03d", "MS", number);
         number++;
         return appointmentNumber;
     }
+
 }
