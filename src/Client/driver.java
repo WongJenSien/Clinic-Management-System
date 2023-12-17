@@ -37,7 +37,7 @@ public class driver {
             medicineList.add(m1);
         }
         
-        clientProgram.addStoreMedicine();
+        clientProgram.updateMedicine();
     }
     
     //Display Medicine List
@@ -52,30 +52,29 @@ public class driver {
         }
         
     }
-    //Add Medicine Store Function
-    private void addStoreMedicine() {
+    
+    //Update Medicine Function
+    private void updateMedicine() {
         int id = 0;
-        
+        boolean correction = true;
         do {
             displayAllMedicine();
-            System.out.print("\nWhich Medicine you want add quantity ?(Exit:0): ");
+            System.out.print("\nWhich Medicine you want edit ?(Exit:0) :");
             String input = sc.nextLine().trim();
 
-            // Check if the input is not empty
             if (input.isEmpty()) {
-                System.out.println(ANSI_RED  +  "Error : Selection cannot be empty. Please enter a valid integer." + ANSI_RESET + ANSI_RESET );
+                System.out.println(ANSI_RED + "Error : Selection cannot be empty. Please enter a valid integer." + ANSI_RESET + ANSI_RESET);
             } else if ("0".equals(input)) {
-                addStoreMedicine();
+                updateMedicine();
             } else {
                 try {
                     // Try to parse the input as an integer
                     id = Integer.parseInt(input);
 
-                    if (id > medicineList.getNumberOfEntries() || id < medicineList.getNumberOfEntries()) {
+                    if (id > medicineList.getNumberOfEntries() || id < 1) {
                         System.out.println(ANSI_RED + "Error: Selection cannot be other than the medicine ID list. Please enter a valid ID number." + ANSI_RESET);
                     }
- 
-                    
+
                     for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
                         if (id == i) {
                             Medicine showMedicine = medicineList.getEntry(i);
@@ -83,48 +82,97 @@ public class driver {
                             double price = showMedicine.getPrice();
                             int store = showMedicine.getStore();
                             String detail = showMedicine.getDetail();
-                            System.out.printf("Medicien : %s \nPrice    : RM %3.2f \nQuantity    : %d \n", medicine, price, store );
+                            System.out.printf("\n\nMedicien : %s \nPrice    :RM %3.2f\nQuantity : %d \nDetail   : %s\n", medicine, price, store, detail);
 
+                            OUTER:
                             do {
-                                System.out.print("\nHow much quantity you want to add ?(Exit:0): ");
-                                input = sc.nextLine().trim();
+                                System.out.println("\n1. Medicine");
+                                System.out.println("2. Price");
+                                System.out.println("3. Detail");
+                                System.out.print("Which information you want to update?(Exit:0) : ");
+                                String selection = sc.nextLine().trim();
 
-                                // Check if the input is not empty
-                                if (input.isEmpty()) {
-                                    System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET + ANSI_RESET);
-                                } else if ("0".equals(input)) {
-                                    addStoreMedicine();
-                                    for (int j = 0; j < 75; j++){
-                                            System.out.print("-");
-                                    }
+                                if (selection.isEmpty()) {
+                                    System.out.println(ANSI_RED + "Error : Selection cannot be empty. Please enter a valid integer." + ANSI_RESET + ANSI_RESET);
+                                    correction = false;
+                                } else if ("0".equals(selection)) {
+                                    break;
                                 } else {
                                     try {
-                                        // Try to parse the input as an integer
-                                        int num = Integer.parseInt(input);
-                                        store += num;
                                         
-                                        if (store < 0) {
-                                            System.out.println(ANSI_RED + "Error : The total quantity cannot be less than 0. Please enter a correct value." + ANSI_RESET);
-                                            store -= num;
-                                        } else {
-                                            medicineList.replace(i, new Medicine(medicine, price, store, detail));
+                                        int num = Integer.parseInt(selection);
+                                        
+                                        switch (num) {
+                                            case 1 -> {
+                                                do {
+                                                    System.out.print("\nEnter new medicine name : ");
+                                                    medicine = sc.nextLine();
+                                                    if (String.valueOf(selection).isEmpty()) {
+                                                        System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET);
+                                                        correction = false;
+                                                    } else {
+                                                        medicineList.replace(i, new Medicine(medicine, price, store, detail));
+                                                        correction = true;
+                                                    }
 
-                                            System.out.printf("\nCompleted Added . Now %s quantity is %d .", medicine, store);
-                                            displayAllMedicine();
-                                            for (int j = 0; j < 75; j++) {
-                                                System.out.print("-");
+                                                } while (correction == false);
+                                                break OUTER;
                                             }
-                                            break;
-                                        }
+                                            case 2 -> {
+                                                do {
+                                                    try {
+                                                        System.out.print("\nEnter new medicine price : RM");
+                                                        String priceInput = sc.nextLine().trim();
 
+                                                        if (priceInput.isEmpty()) {
+                                                            System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET + ANSI_RESET);
+                                                            correction = false;
+                                                        } else {
+                                                            double testprice = Double.parseDouble(priceInput);
+
+                                                            if (testprice < 1) {
+                                                                System.out.println(ANSI_RED + "Error : The price cannot be less than 1. Please enter a correct value." + ANSI_RESET);
+                                                                correction = false;
+                                                            } else {
+                                                                medicineList.replace(i, new Medicine(medicine, testprice, store, detail));
+                                                                correction = true;
+                                                            }
+                                                        }
+
+                                                    } catch (NumberFormatException e) {
+                                                        // Handle the case where the input is not a valid double
+                                                        System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid price." + ANSI_RESET);
+                                                        correction = false;
+                                                    }
+                                                } while (correction == false);
+                                                break OUTER;
+                                            }
+                                            case 3 -> {
+                                                do {
+                                                    System.out.print("\nEnter new medicine detail : ");
+                                                    detail = sc.nextLine();
+                                                    if (String.valueOf(selection).isEmpty()) {
+                                                        System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET);
+                                                        correction = false;
+                                                    } else {
+                                                        medicineList.replace(i, new Medicine(medicine, price, store, detail));
+                                                        correction = true;
+                                                    }
+                                                } while (correction == false);
+                                                break OUTER;
+                                            }
+                                            default ->{
+                                                System.out.println(ANSI_RED + "Error: Selection cannot be other than the display list. Please enter a valid selection number." + ANSI_RESET);
+                                                correction = false;
+                                            }
+                                        }
                                     } catch (NumberFormatException e) {
                                         // Handle the case where the input is not a valid integer
-                                        System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid quantity." + ANSI_RESET);
+                                        System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid selection number." + ANSI_RESET);
+                                        correction = false;
                                     }
                                 }
-                            } while (true);
-
-                            
+                            } while (correction == false);
                         }
                     }
                 } catch (NumberFormatException e) {
@@ -133,128 +181,210 @@ public class driver {
                 }
             }
         } while (true);
-       
     }
-    
-    
-    //Add Function
-    private void addMedicine() {
-        int i;
-        for (i = 1; i <= medicineList.getNumberOfEntries(); i++) {
-        }
-        String name = "";
-        Double price = 0.0;    
-        int store = 0;
-        String detail = "";
-        boolean stop = true;
-        
-        do {
-            System.out.print("\nEnter the medicine name: ");
-            name = sc.nextLine().trim();
 
-            if (name.isEmpty()) {
-                System.out.println(ANSI_RED + "Error: Medicine name cannot be empty. Please enter a valid medicine name." + ANSI_RESET);
-            }
-        } while (name.isEmpty());
-        
-        do {
-            // Prompt user for input
-            System.out.print("\nEnter the medicine price: ");
-            String input = sc.nextLine().trim();
-
-            if (input.isEmpty()) {
-                System.out.println(ANSI_RED + "Error: Medicine price cannot be empty. Please enter a valid price." + ANSI_RESET);
-            } else {
-                try {
-                    price = Double.valueOf(input);
-                    // Exit the loop if input is a valid double
-                    if (price >= 1.0) {
-                        // Exit the loop if input is valid
-                        break;
-                    } else {
-                        throw new NumberFormatException();
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid numeric value for the price and not less than 1." + ANSI_RESET);
-                }
-            }
-           
-        } while (true);
-        
-        do {
-            System.out.print("\nEnter Store Number (not less than 10): ");
-            String input = sc.nextLine().trim();
-
-            // Check if the input is not empty
-            if (input.isEmpty()) {
-                System.out.println(ANSI_RED + "Error : Medicine Store cannot be empty. Please enter a valid input." + ANSI_RESET);
-            } else {
-                try {
-                    // Try to parse the input as an integer
-                    store = Integer.parseInt(input);
-
-                    // Check if the store is less than 10
-                    if (store < 10) {
-                        System.out.println(ANSI_RED + "Error : Medicine Store cannot less than 10. Please enter a store number greater than or equal to 10." + ANSI_RESET);
-                    } else {
-                        // Exit the loop if input is valid
-                        break;
-                    }
-                } catch (NumberFormatException e) {
-                    // Handle the case where the input is not a valid integer
-                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid integer." + ANSI_RESET);
-                }
-            }
-        } while (true);
-        
-        do {
-            System.out.print("\nEnter Medicine Detail: ");
-            String input = sc.nextLine().trim();
-
-            // Check if the input is not empty
-            if (input.isEmpty()) {
-                System.out.println(ANSI_RED + "Detail cannot be empty. Please enter a valid numeric." + ANSI_RESET);
-            } else {
-                // Exit the loop if input is valid
-                detail = input;
-                break;
-            }
-        } while (true);
-
-        System.out.printf("\nMedicien Name   : %s \nMedicien Price  : RM %3.2f \nMedicien Store  : %d \nMedicien Detail : %s\n",
-                name, price, store, detail);
-
-        do{
-        System.out.print("\nIt is the information is you want added ? (Y/N) :");
-        Character confirm = sc.next().toUpperCase().charAt(0);
-        System.out.print("\n");
-        
-        
-        switch (confirm) {
-            case 'Y' -> {
-                Medicine medinice = new Medicine(name, price, store, detail);
-                medicineList.add(medinice);
-                System.out.println("Completed Added");
-                System.out.print("\n");
-                displayAllMedicine();
-                return;
-            }
-            case 'N' -> {
-                displayAllMedicine();
-                return;
-            }
-            default -> System.out.println(ANSI_RED + "Error: Invalid input. Please enter Y = Yes Or N = No." + ANSI_RESET);
-        }
-        }while(true);
-    }
-    
-    /**
-     *
-     * Medicine Module Prepared By Tai Jun Xian (TJX)
-     *
-     *
-     */
-    //Doctor Medicine Main Page
+//    //Add Medicine Store Function
+//    private void addStoreMedicine() {
+//        int id = 0;
+//        
+//        do {
+//            displayAllMedicine();
+//            System.out.print("\nWhich Medicine you want add quantity ?(Exit:0): ");
+//            String input = sc.nextLine().trim();
+//
+//            // Check if the input is not empty
+//            if (input.isEmpty()) {
+//                System.out.println(ANSI_RED  +  "Error : Selection cannot be empty. Please enter a valid integer." + ANSI_RESET + ANSI_RESET );
+//            } else if ("0".equals(input)) {
+//                addStoreMedicine();
+//            } else {
+//                try {
+//                    // Try to parse the input as an integer
+//                    id = Integer.parseInt(input);
+//
+//                    if (id > medicineList.getNumberOfEntries() || id < medicineList.getNumberOfEntries()) {
+//                        System.out.println(ANSI_RED + "Error: Selection cannot be other than the medicine ID list. Please enter a valid ID number." + ANSI_RESET);
+//                    }
+// 
+//                    
+//                    for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
+//                        if (id == i) {
+//                            Medicine showMedicine = medicineList.getEntry(i);
+//                            String medicine = showMedicine.getMedicine();
+//                            double price = showMedicine.getPrice();
+//                            int store = showMedicine.getStore();
+//                            String detail = showMedicine.getDetail();
+//                            System.out.printf("Medicien : %s \nPrice    : RM %3.2f \nQuantity    : %d \n", medicine, price, store );
+//
+//                            do {
+//                                System.out.print("\nHow much quantity you want to add ?(Exit:0): ");
+//                                input = sc.nextLine().trim();
+//
+//                                // Check if the input is not empty
+//                                if (input.isEmpty()) {
+//                                    System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET + ANSI_RESET);
+//                                } else if ("0".equals(input)) {
+//                                    addStoreMedicine();
+//                                    for (int j = 0; j < 75; j++){
+//                                            System.out.print("-");
+//                                    }
+//                                } else {
+//                                    try {
+//                                        // Try to parse the input as an integer
+//                                        int num = Integer.parseInt(input);
+//                                        store += num;
+//                                        
+//                                        if (store < 0) {
+//                                            System.out.println(ANSI_RED + "Error : The total quantity cannot be less than 0. Please enter a correct value." + ANSI_RESET);
+//                                            store -= num;
+//                                        } else {
+//                                            medicineList.replace(i, new Medicine(medicine, price, store, detail));
+//
+//                                            System.out.printf("\nCompleted Added . Now %s quantity is %d .", medicine, store);
+//                                            displayAllMedicine();
+//                                            for (int j = 0; j < 75; j++) {
+//                                                System.out.print("-");
+//                                            }
+//                                            break;
+//                                        }
+//
+//                                    } catch (NumberFormatException e) {
+//                                        // Handle the case where the input is not a valid integer
+//                                        System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid quantity." + ANSI_RESET);
+//                                    }
+//                                }
+//                            } while (true);
+//
+//                            
+//                        }
+//                    }
+//                } catch (NumberFormatException e) {
+//                    // Handle the case where the input is not a valid integer
+//                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid medicine ID." + ANSI_RESET);
+//                }
+//            }
+//        } while (true);
+//       
+//    }
+//    
+//    //Add Function
+//    private void addMedicine() {
+//        int i;
+//        for (i = 1; i <= medicineList.getNumberOfEntries(); i++) {
+//        }
+//        String name = "";
+//        Double price = 0.0;    
+//        int store = 0;
+//        String detail = "";
+//        boolean stop = true;
+//        
+//        do {
+//            System.out.print("\nEnter the medicine name: ");
+//            name = sc.nextLine().trim();
+//
+//            if (name.isEmpty()) {
+//                System.out.println(ANSI_RED + "Error: Medicine name cannot be empty. Please enter a valid medicine name." + ANSI_RESET);
+//            }
+//        } while (name.isEmpty());
+//        
+//        do {
+//            // Prompt user for input
+//            System.out.print("\nEnter the medicine price: ");
+//            String input = sc.nextLine().trim();
+//
+//            if (input.isEmpty()) {
+//                System.out.println(ANSI_RED + "Error: Medicine price cannot be empty. Please enter a valid price." + ANSI_RESET);
+//            } else {
+//                try {
+//                    price = Double.valueOf(input);
+//                    // Exit the loop if input is a valid double
+//                    if (price >= 1.0) {
+//                        // Exit the loop if input is valid
+//                        break;
+//                    } else {
+//                        throw new NumberFormatException();
+//                    }
+//                } catch (NumberFormatException e) {
+//                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid numeric value for the price and not less than 1." + ANSI_RESET);
+//                }
+//            }
+//           
+//        } while (true);
+//        
+//        do {
+//            System.out.print("\nEnter Store Number (not less than 10): ");
+//            String input = sc.nextLine().trim();
+//
+//            // Check if the input is not empty
+//            if (input.isEmpty()) {
+//                System.out.println(ANSI_RED + "Error : Medicine Store cannot be empty. Please enter a valid input." + ANSI_RESET);
+//            } else {
+//                try {
+//                    // Try to parse the input as an integer
+//                    store = Integer.parseInt(input);
+//
+//                    // Check if the store is less than 10
+//                    if (store < 10) {
+//                        System.out.println(ANSI_RED + "Error : Medicine Store cannot less than 10. Please enter a store number greater than or equal to 10." + ANSI_RESET);
+//                    } else {
+//                        // Exit the loop if input is valid
+//                        break;
+//                    }
+//                } catch (NumberFormatException e) {
+//                    // Handle the case where the input is not a valid integer
+//                    System.out.println(ANSI_RED + "Error: Invalid input. Please enter a valid integer." + ANSI_RESET);
+//                }
+//            }
+//        } while (true);
+//        
+//        do {
+//            System.out.print("\nEnter Medicine Detail: ");
+//            String input = sc.nextLine().trim();
+//
+//            // Check if the input is not empty
+//            if (input.isEmpty()) {
+//                System.out.println(ANSI_RED + "Detail cannot be empty. Please enter a valid numeric." + ANSI_RESET);
+//            } else {
+//                // Exit the loop if input is valid
+//                detail = input;
+//                break;
+//            }
+//        } while (true);
+//
+//        System.out.printf("\nMedicien Name   : %s \nMedicien Price  : RM %3.2f \nMedicien Store  : %d \nMedicien Detail : %s\n",
+//                name, price, store, detail);
+//
+//        do{
+//        System.out.print("\nIt is the information is you want added ? (Y/N) :");
+//        Character confirm = sc.next().toUpperCase().charAt(0);
+//        System.out.print("\n");
+//        
+//        
+//        switch (confirm) {
+//            case 'Y' -> {
+//                Medicine medinice = new Medicine(name, price, store, detail);
+//                medicineList.add(medinice);
+//                System.out.println("Completed Added");
+//                System.out.print("\n");
+//                displayAllMedicine();
+//                return;
+//            }
+//            case 'N' -> {
+//                displayAllMedicine();
+//                return;
+//            }
+//            default -> System.out.println(ANSI_RED + "Error: Invalid input. Please enter Y = Yes Or N = No." + ANSI_RESET);
+//        }
+//        }while(true);
+//    }
+//    
+//    /**
+//     *
+//     * Medicine Module Prepared By Tai Jun Xian (TJX)
+//     *
+//     *
+//     */
+//    //Doctor Medicine Main Page
 //    private void doctorMedicine() {
 //        int selection = 0;
 //
@@ -316,88 +446,6 @@ public class driver {
 //                choosed, displayMedicine.getPrice(), displayMedicine.getStore(), displayMedicine.getDetail());
 //
 //        doctorMedicine();
-//    }
-//
-//
-//    //Update Medicine Function
-//    private void updateMedicine() {
-//        boolean correction = true;
-//        displayAllMedicine();
-//
-//        System.out.print("\nWhich Medicine you want update ?(Exit:0) :");
-//        int selection = sc.nextInt();
-//        System.out.print("\n");
-//
-//        if (selection > medicineList.getNumberOfEntries()) {
-//            System.out.println("Selection error,please select again");
-//            addStoreMedicine();
-//        } else if (selection == 0) {
-//            doctorMedicine();
-//        }
-//
-//        for (int i = 1; i <= medicineList.getNumberOfEntries(); i++) {
-//            if (selection == i) {
-//                System.out.println(i);
-//                Medicine showMedicine = medicineList.getEntry(i);
-//                String medicine = showMedicine.getMedicine();
-//                double price = showMedicine.getPrice();
-//                int store = showMedicine.getStore();
-//                String detail = showMedicine.getDetail();
-//                System.out.printf("Medicien : %s \nPrice   :RM %3.2f\nStore    : %d \nDetail   : %s\n", medicine, price, store, detail);
-//
-//                do {
-//                    System.out.println("\nWhich information you want to update? ");
-//                    System.out.println("1. Medicine");
-//                    System.out.println("2. Price");
-//                    System.out.println("3. Detail\n");
-//                    selection = sc.nextInt();
-//                    sc.nextLine();
-//
-//                    switch (selection) {
-//                        case 1:
-//                            do {
-//                                System.out.print("\nUpdate medicine name : ");
-//                                medicine = sc.nextLine();
-//                                if (String.valueOf(selection).isEmpty()) {
-//                                    System.out.println("Please enter medicine name . Thank You. : \n");
-//                                    correction = false;
-//                                }
-//                                medicineList.replace(i, new Medicine(medicine, price, store, detail));
-//                                doctorMedicine();
-//                            } while (correction == false);
-//                            break;
-//                        case 2:
-//                            do {
-//                                System.out.print("\nUpdate medicine price : RM");
-//                                price = sc.nextDouble();
-//                                if (String.valueOf(selection).isEmpty()) {
-//                                    System.out.println("Please enter medicine price . Thank You. : \n");
-//                                    correction = false;
-//                                }
-//                                medicineList.replace(i, new Medicine(medicine, price, store, detail));
-//                                doctorMedicine();
-//                            } while (correction == false);
-//                            break;
-//                        case 3:
-//                            do {
-//                                System.out.print("\nUpdate medicine detail : ");
-//                                detail = sc.nextLine();
-//                                if (String.valueOf(selection).isEmpty()) {
-//                                    System.out.println("Please enter medicine detail . Thank You. : \n");
-//                                    correction = false;
-//                                }
-//                                medicineList.replace(i, new Medicine(medicine, price, store, detail));
-//                                doctorMedicine();
-//                            } while (correction == false);
-//                            break;
-//                        default:
-//                            System.out.println("\nInvalid Input Please Enter Again\n");
-//                            doctorMedicine();
-//                    }
-//
-//                } while (selection >= 3 || selection <= 1);
-//            }
-//        }
 //    }
 //
 //    //Delete Medicine Function

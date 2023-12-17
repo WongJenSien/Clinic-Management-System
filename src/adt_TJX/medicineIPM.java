@@ -98,4 +98,8 @@ public class medicineIPM<T> implements ListInterfaceTJX<T> {
       array[index] = array[index + 1];
     }
   }
+
+    void addEntry(String entry1) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
