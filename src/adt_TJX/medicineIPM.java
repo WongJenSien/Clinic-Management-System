@@ -6,10 +6,10 @@ package adt_TJX;
  */
 
 public class medicineIPM<T> implements ListInterfaceTJX<T> {
-
-  private T[] array;
   private int numberOfEntries;
   private static final int DEFAULT_CAPACITY = 10;
+  private T[] array;
+
 
   public medicineIPM() {
     this(DEFAULT_CAPACITY);
