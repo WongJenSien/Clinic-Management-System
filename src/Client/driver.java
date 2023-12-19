@@ -39,7 +39,8 @@ public class driver {
             treatmentList.add(t[a]);
         }
 
-        clientProgram.removeTreatment();
+        clientProgram.alertAddTreatment();
+        clientProgram.addTreatment();;
         // clientProgram.medicalHeader();
         // clientProgram.displayTreatment();
 
@@ -49,6 +50,10 @@ public class driver {
     }
 
     private void mainMenu() {
+    }
+
+    public void alertAddTreatment(){
+        System.out.println("hi, please add your new treatment into list");
     }
 
     public void treatmentMenu() {
@@ -125,7 +130,7 @@ public class driver {
         Treatment addTreatmentService = new Treatment(addTreatment, addVenue, addPrice, addDesc);
         treatmentList.add(addTreatmentService);
         System.out.println("\n Treatment added successfully!\n");
-        treatmentMenu();
+       displayTreatment();
     }
 
     public String insertTreatment() {
