@@ -4,89 +4,71 @@
  */
 package Client;
 
-/**
- *
- * @author wongh
- */
+import java.util.Scanner;
+
 public class Display {
-    public void userProfile() {
-        //Show User Profile
-        System.out.println(patientList.getEntry(patientPosition));
-        int selection;
-        char answer = 0, choose = 0;
-        do {
-            do {
+     public static void main(String[] args) {
+        // Create a sample user profile
+        userProfile userProfile = new userProfile("John Doe", "12345", "555-1234", "john.doe@example.com", "Software Engineer");
 
-                System.out.println("1. Modify");
-                System.out.println("2. Permenantly delete account");
-                System.out.println("3. Back");
-                System.out.print("Enter Your Selection : ");
-                selection = sc.nextInt();
+        // Display current profile information
+        displayProfile(userProfile);
 
-                switch (selection) {
+        // Allow user to modify profile information
+        modifyProfile(userProfile);
 
-                    case 1:
-                        // MOdify
-                        String name,
-                         studentID,
-                         phoneNum,
-                         icNum;
-                        String oldId = patientList.getEntry(patientPosition).getStudentID();
-                        char gender;
-                        int age;
-                        sc.nextLine();
-                        System.out.print("Enter Name: ");
-                        name = sc.nextLine();
-                        System.out.print("Enter Student ID: ");
-                        studentID = sc.nextLine();
-                        System.out.print("Enter Phone No.: ");
-                        phoneNum = sc.nextLine();
-                        System.out.print("Enter Ic No.: ");
-                        icNum = sc.nextLine();
-                        System.out.print("Enter Age: ");
-                        age = sc.nextInt();
-                        System.out.print("Gender (M/F) : ");
-                        gender = sc.next().toUpperCase().charAt(0);
+        // Display updated profile information
+        System.out.println("\nUpdated Profile Information:");
+        displayProfile(userProfile);
+    }
 
-                        Patient p = new Patient(name, studentID, phoneNum, icNum, age, gender);
-                        patientList.replace(patientPosition, p);
-                        System.out.println("Do you want to back to profile?(Y=YES/N=NO)");
-                        choose = sc.next().toUpperCase().charAt(0);
+    private static void displayProfile(userProfile userProfile) {
+        System.out.println("\nProfile Information:");
+        System.out.println("1. Name: " + userProfile.getName());
+        System.out.println("2. Work ID: " + userProfile.getWorkId());
+        System.out.println("3. Phone Number: " + userProfile.getPhoneNumber());
+        System.out.println("4. Email Address: " + userProfile.getEmailAddress());
+        System.out.println("5. Specialist: " + userProfile.getSpecialist());
+    }
 
-                        System.out.println(patientList.getEntry(patientPosition));
+    private static void modifyProfile(userProfile userProfile) {
+        Scanner scanner = new Scanner(System.in);
 
-                        modifyAppointmentPatientId(patientList.getEntry(patientPosition), oldId);
+        System.out.print("\nEnter the option number to modify (or 0 to finish): ");
+        int option = scanner.nextInt();
+        while (option != 0) {
+            scanner.nextLine(); // Consume the newline character
 
-                        break;
+            switch (option) {
+                case 1:
+                    System.out.print("Enter new name: ");
+                    userProfile.setName(scanner.nextLine());
+                    break;
+                case 2:
+                    System.out.print("Enter new work ID: ");
+                    userProfile.setWorkId(scanner.nextLine());
+                    break;
+                case 3:
+                    System.out.print("Enter new phone number: ");
+                    userProfile.setPhoneNumber(scanner.nextLine());
+                    break;
+                case 4:
+                    System.out.print("Enter new email address: ");
+                    userProfile.setEmailAddress(scanner.nextLine());
+                    break;
+                case 5:
+                    System.out.print("Enter new specialist: ");
+                    userProfile.setSpecialist(scanner.nextLine());
+                    break;
+                default:
+                    System.out.println("Invalid option");
+            }
 
-                    case 2:
-                        //Delete
-                        System.out.println("Are you sure to permenantly delete your account?(Y=YES/N=NO)");
+            // Display current profile information
+            displayProfile(userProfile);
 
-                        answer = sc.next().toUpperCase().charAt(0);
-                        if (answer == 'Y') {
-                            int size = patientList.getNumberOfEntries();
-                            Patient removePatient = patientList.getEntry(patientPosition);
-                            patientList.remove(patientPosition);
-                            //Delete Patient Appointment Record
-                            deleteAppointmentPatient(removePatient);
-                            if (patientList.getNumberOfEntries() < size) {
-                                System.out.println("Successful remove");
-                            }
-
-                            mainMenu();
-                        } else {
-                            break;
-                        }
-                    case 3:
-                        userMainMenu();
-                        break;
-                    default:
-
-                }
-            } while (choose == 'Y' && selection == 1);
-
-        } while (selection != 1 && selection != 2);
-
+            System.out.print("\nEnter the option number to modify (or 0 to finish): ");
+            option = scanner.nextInt();
+        }
     }
 }
