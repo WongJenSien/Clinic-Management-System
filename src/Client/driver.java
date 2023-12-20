@@ -199,13 +199,23 @@ public class driver {
         double insertPrice;
         do {
             System.out.println("Insert the treatment price: ");
+    
+            // Check if the input is a double
+            while (!sc.hasNextDouble()) {
+                System.out.println("Invalid input. Please enter a valid number: ");
+                sc.next(); // Consume the invalid input
+            }
+    
             insertPrice = sc.nextDouble();
-
+    
             if (insertPrice <= 0) {
                 validation = false;
-                System.out.println("Price cannot below zero, please enter again! ");
+                System.out.println("Price cannot be zero or negative. Please enter again! ");
+            } else {
+                validation = true;
             }
         } while (!validation);
+    
         return insertPrice;
     }
 
