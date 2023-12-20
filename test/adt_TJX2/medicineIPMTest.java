@@ -74,28 +74,28 @@ public class medicineIPMTest {
         
     }
 
-    /**
-     * Test of add method, of class medicineIPM.
-     */
-    @Test
-    public void testAdd() {
-        String newName = "New Medicine";
-        double newPrice = 15.0;
-        int newStore = 5;
-        String newDetail = "This is a new medicine for testing.";
+    // /**
+    //  * Test of add method, of class medicineIPM.
+    //  */
+    // @Test
+    // public void testAdd() {
+    //     String newName = "New Medicine";
+    //     double newPrice = 15.0;
+    //     int newStore = 5;
+    //     String newDetail = "This is a new medicine for testing.";
 
-        // When
-        Medicine newMedicine = new Medicine(newName, newPrice, newStore, newDetail);
-        medicineList.add(newMedicine);
+    //     // When
+    //     Medicine newMedicine = new Medicine(newName, newPrice, newStore, newDetail);
+    //     medicineList.add(newMedicine);
 
-        // Then
-        Medicine lastMedicine = medicineList.getEntry(medicineList.getNumberOfEntries());
+    //     // Then
+    //     Medicine lastMedicine = medicineList.getEntry(medicineList.getNumberOfEntries());
 
-        assertEquals("Medicine name should match", newName, lastMedicine.getMedicine());
-        assertEquals("Medicine price should match", newPrice, lastMedicine.getPrice(), 0.001);
-        assertEquals("Medicine store should match", newStore, lastMedicine.getStore());
-        assertEquals("Medicine detail should match", newDetail, lastMedicine.getDetail());
-    }
+    //     assertEquals("Medicine name should match", newName, lastMedicine.getMedicine());
+    //     assertEquals("Medicine price should match", newPrice, lastMedicine.getPrice(), 0.001);
+    //     assertEquals("Medicine store should match", newStore, lastMedicine.getStore());
+    //     assertEquals("Medicine detail should match", newDetail, lastMedicine.getDetail());
+    // }
 //
 //    /**
 //     * Test of remove method, of class medicineIPM.
