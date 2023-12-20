@@ -42,80 +42,42 @@ public class driver {
         Appointment selectedApp = new Appointment();
         Appointment currentApp = new Appointment();
 
+        selectedApp = selectAppointment(user);
+        currentApp = selectedApp;
+
         Doctor newDoc = selectedApp.getDoctor();
         DutySchedule newSchedule = selectedApp.getDutySchedule();
         Treatment newTreatment = selectedApp.getTreatment();
-        selectedApp = selectAppointment(user);
 
-        currentApp = selectedApp;
-        newDoc = selectedApp.getDoctor();
-        newSchedule = selectedApp.getDutySchedule();
-        newTreatment = selectedApp.getTreatment();
         do {
 
             answer = selectModify(modifyList);
 
             switch (answer) {
                 case "1":
+                    System.out.println("\n");
                     newDoc = selectDoctor(selectedApp.getDoctor());
                     break;
                 case "2":
                     newSchedule = selectDateTime(selectedApp.getDutySchedule());
+
                     break;
                 case "3":
                     newTreatment = selectTreatment(selectedApp.getTreatment());
                     break;
             }
-            System.out.println("Current Info");
-            System.out.println(newDoc);
-            System.out.println(newSchedule);
-            System.out.println(newTreatment);
-
         } while (!answer.equals("4"));
 
-        System.out.println("Current Information");
-        System.out.println(selectedApp);
+        System.out.println("\nCurrent Information");
+        System.out.println("-------------------");
+        System.out.println(currentApp + "\n");
 
-        System.out.println("Modified Information");
+        System.out.println("\nModified Information");
+        System.out.println("--------------------");
         selectedApp.setDoctor(newDoc);
         selectedApp.setDutySchedule(newSchedule);
         selectedApp.setTreatment(newTreatment);
         System.out.println(selectedApp);
-    }
-
-    public static Doctor selectDoctor(Doctor currentDoc) {
-
-        String answer;
-        int numOfDoc = 0;
-        Doctor selectedDoc = currentDoc;
-        Doctor[] newList = new Doctor[doctor.length - 1];
-
-        do {
-            System.out.println("Doctor List");
-
-            for (int a = 0; a < doctor.length; a++) {
-                if (doctor[a] != currentDoc) {
-                    System.out.println(String.format("%2d. %s", numOfDoc + 1, doctor[a].getName()));
-                    newList[numOfDoc] = doctor[a];
-                    numOfDoc++;
-                }
-
-            }
-            System.out.println(String.format("%2d. %s", doctor.length, "Back"));
-
-            System.out.print("\nSelect an Doctor: ");
-            answer = input(doctor.length);
-            System.out.println("");
-
-            if (answer.contains("Error")) {
-                System.out.println(answer + " Please Try Again\n");
-            }
-        } while (answer.contains("Error"));
-
-        if (Integer.parseInt(answer) != doctor.length) {
-            selectedDoc = newList[Integer.parseInt(answer) - 1];
-        }
-        return selectedDoc;
     }
 
     public static String input(int index) {
@@ -142,7 +104,7 @@ public class driver {
 
         String answer;
         do {
-            System.out.println("\nWhat would you like to modify ?");
+            System.out.println("\nWhat would you like to modify ?\n");
             for (String list : modifyList) {
                 System.out.println(list);
             }
@@ -157,6 +119,44 @@ public class driver {
         } while (answer.contains("Error"));
 
         return answer;
+    }
+
+    public static Doctor selectDoctor(Doctor currentDoc) {
+
+        String answer;
+        int numOfDoc = 0;
+        Doctor selectedDoc = currentDoc;
+        Doctor[] newList = new Doctor[doctor.length - 1];
+
+        do {
+            System.out.println("Doctor List");
+            System.out.println("-----------");
+
+            for (int a = 0; a < doctor.length; a++) {
+                if (doctor[a] != currentDoc) {
+                    System.out.println(String.format("%2d. %s", numOfDoc + 1, doctor[a].getName()));
+                    newList[numOfDoc] = doctor[a];
+                    numOfDoc++;
+                }
+
+            }
+            System.out.println(String.format("%2d. %s", doctor.length, "Back"));
+
+            System.out.print("\nSelect an Doctor: ");
+            answer = input(doctor.length);
+            System.out.println("");
+
+            if (answer.contains("Error")) {
+                System.out.println(answer + " Please Try Again\n");
+            }
+        } while (answer.contains("Error"));
+
+        if (Integer.parseInt(answer) != doctor.length) {
+            selectedDoc = newList[Integer.parseInt(answer) - 1];
+            System.out.println("Modify Successfull...");
+            System.out.println(String.format("Doctor: %s -> %s\n", currentDoc.getName(), selectedDoc.getName()));
+        }
+        return selectedDoc;
     }
 
     public static Appointment selectAppointment(Patient user) {
@@ -228,12 +228,16 @@ public class driver {
                 }
 
                 //Capture Date Input
-                System.out.print("Enter Date : ");
+                System.out.print("Enter Date ( Enter 'BACK' to cancel ): ");
 
                 String date = sc.nextLine();
 
                 num = "";
                 int repeat = 1;
+
+                if (date.toUpperCase().equals("BACK")) {
+                    return currentDateTime;
+                }
 
                 //Define the Date, Month and Years
                 if (!date.isEmpty()) {
@@ -353,10 +357,12 @@ public class driver {
             }
 
         } while (index == 0);
-        System.out.println("Here");
-        System.out.println(currentDateTime);
-        currentDateTime = new DutySchedule(day, month, years, selectedTime);
-        return currentDateTime;
+        duty = new DutySchedule(day, month, years, selectedTime);
+        System.out.println("\n\nModify Successfully...");
+        System.out.println(String.format("Appointment Date: %s -> %s\n\n", currentDateTime, duty));
+
+        sc.nextLine();
+        return duty;
     }
 
     public static Treatment selectTreatment(Treatment currentTreat) {
@@ -372,13 +378,14 @@ public class driver {
             }
         }
         do {
-            System.out.println("Treatment List");
-            for (int a = 0; a < newList.length; a++) {
+            System.out.println("\n\nTreatment List");
+            System.out.println("--------------");
+            for (int a = 0; a < numOfTreat; a++) {
                 System.out.println(String.format("%2d. %s", a + 1, newList[a]));
             }
             System.out.println(String.format("%2d. %s", treatment.length, "Back"));
 
-            System.out.println("Select an Treatment: ");
+            System.out.print("\nSelect an Treatment: ");
             answer = input(treatment.length);
 
             System.out.println("");
@@ -386,7 +393,13 @@ public class driver {
                 System.out.println(answer + " Please Try Again\n");
             }
         } while (answer.contains("ERROR"));
-        currentTreat = newList[Integer.parseInt(answer) - 1];
+
+        if (Integer.parseInt(answer) != treatment.length) {
+            System.out.println("\nModify Successfull..");
+            System.out.println(String.format("Treatment: %s (%s) -> %s (%s)", currentTreat.getTreatment(), currentTreat.getVenue(), newList[Integer.parseInt(answer) - 1].getTreatment(), newList[Integer.parseInt(answer) - 1].getVenue()));
+            currentTreat = newList[Integer.parseInt(answer) - 1];
+        }
+
         return currentTreat;
     }
 
