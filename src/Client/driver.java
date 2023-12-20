@@ -141,6 +141,21 @@ public class driver {
             System.out.println("Insert Treatment service name:");
             insertTreatment = sc.nextLine();
 
+             // Check if the input contains at least 5 characters
+             if (insertTreatment.length() < 5) {
+                System.out.println("Please enter a treatment name with at least 5 characters.");
+                validation = false;
+                continue; // Skip the rest of the loop and ask for input again
+            }
+
+            // Check if the input contains only digits
+            if (insertTreatment.matches("\\d+")) {
+                System.out.println("Treatment name cannot contain only digits. Please enter a valid name.");
+                validation = false;
+            } else {
+                validation = true;
+            }
+
         } while (!validation);
         return insertTreatment;
     }
@@ -172,6 +187,8 @@ public class driver {
             if (selection >= insertVenue.length || selection <= 0) {
                 System.out.println("Please select a valid number");
                 validation = false;
+            }else{
+                validation=true;
             }
 
         } while (!validation);
