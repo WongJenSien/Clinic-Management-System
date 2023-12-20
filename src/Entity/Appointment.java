@@ -19,6 +19,7 @@ public class Appointment {
     public static int number = 0;
 
     public Appointment() {
+        
     }
 
     public Appointment(DutySchedule timeSlot, Patient p, Doctor d, Treatment treatment) {
@@ -53,7 +54,7 @@ public class Appointment {
 
     //Setter
     public void setDutySchedule(DutySchedule timeSlot) {
-        timeSlot = timeSlot;
+        this.timeSlot = timeSlot;
     }
 
     public void setDoctor(Doctor doctor) {
