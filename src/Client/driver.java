@@ -36,7 +36,6 @@ public class driver {
         for (Medicine m1 : m) {
             medicineList.add(m1);
         }
-        
         clientProgram.updateMedicine();
     }
     
@@ -50,7 +49,6 @@ public class driver {
             int Store = allMedicine.getStore();
             System.out.printf(" %d.   %-16s  RM %6.2f  %5d\n", i, medicine, price, Store);
         }
-        
     }
     
     //Update Medicine Function

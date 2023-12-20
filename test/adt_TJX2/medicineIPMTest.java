@@ -25,7 +25,6 @@ public class medicineIPMTest {
 
     @Before
     public void setUp() {
-        
         Medicine[] m = new Medicine[4];
         m[0] = new Medicine("Painkiller", 10.5, 10, "Pain relievers are medicines that reduce or relieve headaches,\n sore muscles, arthritis, or other aches and pains. \nThere are many different pain medicines, and each one has advantages and risks. \nSome types of pain respond better to certain medicines than others.\n");
         m[1] = new Medicine("Antibiotics ", 11.5, 10, "Antibiotics are medicines that fight infections caused by bacteria\n in humans and animals by either killing the bacteria or \n making it difficult for the bacteria to grow and multiply. Bacteria are germs.");
@@ -71,7 +70,6 @@ public class medicineIPMTest {
         assertEquals("Medicine price should match", EPrice, newMedicine.getPrice(), 0.01);
         assertEquals("Medicine store should match", EStore, newMedicine.getStore());
         assertEquals("Medicine detail should match", EDetail, newMedicine.getDetail());
-        
     }
 
     // /**
