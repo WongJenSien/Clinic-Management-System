@@ -128,13 +128,13 @@ public class driver {
                                                             System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET + ANSI_RESET);
                                                             correction = false;
                                                         } else {
-                                                            double testprice = Double.parseDouble(priceInput);
+                                                            double newprice = Double.parseDouble(priceInput);
 
-                                                            if (testprice < 1) {
+                                                            if (newprice < 1) {
                                                                 System.out.println(ANSI_RED + "Error : The price cannot be less than 1. Please enter a correct value." + ANSI_RESET);
                                                                 correction = false;
                                                             } else {
-                                                                medicineList.replace(i, new Medicine(medicine, testprice, store, detail));
+                                                                medicineList.replace(i, new Medicine(medicine, newprice, store, detail));
                                                                 correction = true;
                                                             }
                                                         }
