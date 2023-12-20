@@ -106,12 +106,12 @@ public class driver {
                                             case 1 -> {
                                                 do {
                                                     System.out.print("\nEnter new medicine name : ");
-                                                    medicine = sc.nextLine();
-                                                    if (String.valueOf(selection).isEmpty()) {
+                                                    String newMedicine = sc.nextLine();
+                                                    if (String.valueOf(newMedicine).isEmpty()) {
                                                         System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET);
                                                         correction = false;
                                                     } else {
-                                                        medicineList.replace(i, new Medicine(medicine, price, store, detail));
+                                                        medicineList.replace(i, new Medicine(newMedicine, price, store, detail));
                                                         correction = true;
                                                     }
 
@@ -150,12 +150,12 @@ public class driver {
                                             case 3 -> {
                                                 do {
                                                     System.out.print("\nEnter new medicine detail : ");
-                                                    detail = sc.nextLine();
-                                                    if (String.valueOf(selection).isEmpty()) {
+                                                    String newDetail = sc.nextLine();
+                                                    if (String.valueOf(newDetail).isEmpty()) {
                                                         System.out.println(ANSI_RED + "Error : Cannot enter empty input. Please enter a valid input." + ANSI_RESET);
                                                         correction = false;
                                                     } else {
-                                                        medicineList.replace(i, new Medicine(medicine, price, store, detail));
+                                                        medicineList.replace(i, new Medicine(medicine, price, store, newDetail));
                                                         correction = true;
                                                     }
                                                 } while (correction == false);
