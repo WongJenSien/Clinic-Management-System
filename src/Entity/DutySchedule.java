@@ -78,40 +78,16 @@ public class DutySchedule {
 
     //METHOD
     public boolean checkValidDate() {
-        int word = 0;
+
         if (years == 0) {
             return false;
         }
+        int word = checkMonth(this.month);
+        return checkDay(word);
+    }
 
+    public boolean checkDay(int month) {
         switch (month) {
-            case "JAN" ->
-                word = 1;
-            case "FEB" ->
-                word = 2;
-            case "MAR" ->
-                word = 3;
-            case "APR" ->
-                word = 4;
-            case "MAY" ->
-                word = 5;
-            case "JUN" ->
-                word = 6;
-            case "JUL" ->
-                word = 7;
-            case "AUG" ->
-                word = 8;
-            case "SEP" ->
-                word = 9;
-            case "OCT" ->
-                word = 10;
-            case "NOV" ->
-                word = 11;
-            case "DEC" ->
-                word = 12;
-
-        }
-
-        switch (word) {
             case 4, 6, 9, 11 -> {
                 if (day <= 30) {
                     return true;
@@ -145,7 +121,40 @@ public class DutySchedule {
                 return false;
             }
         }
+    }
 
+    public int checkMonth(String month) {
+        int word;
+        switch (month) {
+            case "JAN" ->
+                word = 1;
+            case "FEB" ->
+                word = 2;
+            case "MAR" ->
+                word = 3;
+            case "APR" ->
+                word = 4;
+            case "MAY" ->
+                word = 5;
+            case "JUN" ->
+                word = 6;
+            case "JUL" ->
+                word = 7;
+            case "AUG" ->
+                word = 8;
+            case "SEP" ->
+                word = 9;
+            case "OCT" ->
+                word = 10;
+            case "NOV" ->
+                word = 11;
+            case "DEC" ->
+                word = 12;
+            default ->
+                word = 0;
+
+        }
+        return word;
     }
 
     //ToString
