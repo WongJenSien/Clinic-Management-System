@@ -25,12 +25,7 @@ public class AppointmentTest {
     Appointment appointment = new Appointment();
 
     public AppointmentTest() {
-        time = new Time(800, 1000);
-        timeSlot = new DutySchedule(1, "JAN", 2022, time);
-        patient = new Patient("YUE YI CHEN", "2201001", "0121235678", "010903041901", 21, 'M');
-        doctor = new Doctor("Bryan Ng", 45, "M");
-        treatment = new Treatment("Blood Test", "Room B1000", 150);
-        appointment = new Appointment(timeSlot, patient, doctor, treatment);
+
     }
 
     @BeforeClass
@@ -45,7 +40,12 @@ public class AppointmentTest {
 
     @Before
     public void setUp() {
-
+        time = new Time(800, 1000);
+        timeSlot = new DutySchedule(1, "JAN", 2022, time);
+        patient = new Patient("YUE YI CHEN", "2201001", "0121235678", "010903041901", 21, 'M');
+        doctor = new Doctor("Bryan Ng", 45, "M");
+        treatment = new Treatment("Blood Test", "Room B1000", 150);
+        appointment = new Appointment(timeSlot, patient, doctor, treatment);
     }
 
     @After
