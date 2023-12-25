@@ -19,7 +19,7 @@ public class Appointment {
     public static int number = 0;
 
     public Appointment() {
-        
+
     }
 
     public Appointment(DutySchedule timeSlot, Patient p, Doctor d, Treatment treatment) {
@@ -79,6 +79,19 @@ public class Appointment {
         String appointmentNumber = String.format("%s%03d", "MS", number);
         number++;
         return appointmentNumber;
+    }
+
+    public void modifyAppointment(Doctor newDoc, DutySchedule newSchedule, Treatment newTreatment) {
+        if (newDoc != null) {
+            setDoctor(newDoc);
+        }
+        if (newSchedule != null) {
+            setDutySchedule(newSchedule);
+        }
+        if (newTreatment != null) {
+            setTreatment(newTreatment);
+        }
+        
     }
 
 }
