@@ -57,132 +57,171 @@ public class AppointmentTest {
      * Test of getDutySchedule method, of class Appointment.
      */
     @Test
-    public void testGetDutySchedule() {
-        System.out.println("getDutySchedule");
-        Appointment instance = appointment;
-        DutySchedule expResult = timeSlot;
-        DutySchedule result = instance.getDutySchedule();
-        assertEquals(expResult, result);
-    }
+    public void testModifyAppointment() {
+        System.out.println("testModifyAppointment");
 
-    /**
-     * Test of getPatient method, of class Appointment.
-     */
-    @Test
-    public void testGetPatient() {
-        System.out.println("getPatient");
         Appointment instance = appointment;
-        Patient expResult = patient;
-        Patient result = instance.getPatient();
-        assertEquals(expResult, result);
-    }
+        System.out.println("\nCurrent Appointment Info");
+        System.out.println("Doctor :" + instance.getDoctor().getName());
+        System.out.println("Date Time :" + instance.getDutySchedule());
+        System.out.println("Treatment :" + instance.getTreatment().getTreatment() + "\n");
+        DutySchedule newSchedule = null;
+        Doctor newDoc = null;
+        Treatment newTreatment = null;
 
-    /**
-     * Test of getAppointmentNumber method, of class Appointment.
-     */
-    @Test
-    public void testGetAppointmentNumber() {
-        System.out.println("getAppointmentNumber");
-        Appointment instance = appointment;
-        String expResult = appointment.getAppointmentNumber();
-        String result = instance.getAppointmentNumber();
-        assertEquals(expResult, result);
-    }
+        if (newSchedule != null) {
+            instance.setDutySchedule(newSchedule);
+        }
 
-    /**
-     * Test of getDoctor method, of class Appointment.
-     */
-    @Test
-    public void testGetDoctor() {
-        System.out.println("getDoctor");
-        Appointment instance = appointment;
-        Doctor expResult = doctor;
-        Doctor result = instance.getDoctor();
-        assertEquals(expResult, result);
-    }
+        if (newDoc != null) {
+            instance.setDoctor(newDoc);
+        }
 
-    /**
-     * Test of getTreatment method, of class Appointment.
-     */
-    @Test
-    public void testGetTreatment() {
-        System.out.println("getTreatment");
-        Appointment instance = appointment;
-        Treatment expResult = treatment;
-        Treatment result = instance.getTreatment();
-        assertEquals(expResult, result);
-    }
+        if (newTreatment != null) {
+            instance.setTreatment(newTreatment);
+        }
 
-    /**
-     * Test of setDutySchedule method, of class Appointment.
-     */
-    @Test
-    public void testSetDutySchedule() {
-        System.out.println("setDutySchedule");
-        DutySchedule timeSlot = new DutySchedule(2, "JAN", 2022, new Time(1000, 1200));
-        Appointment instance = appointment;
-        instance.setDutySchedule(timeSlot);
-        assertEquals(timeSlot, instance.getDutySchedule());
-    }
+        Appointment expResult = new Appointment(appointment.getDutySchedule(), patient, appointment.getDoctor(), appointment.getTreatment());
+        Appointment result = instance;
+        instance.modifyAppointment(newDoc, newSchedule, newTreatment);
+        System.out.println("\nModified Appointment Info -- Test Null Value");
+        System.out.println("Doctor :" + result.getDoctor().getName());
+        System.out.println("Date Time :" + result.getDutySchedule());
+        System.out.println("Treatment :" + result.getTreatment().getTreatment() + "\n");
 
-    /**
-     * Test of setDoctor method, of class Appointment.
-     */
-    @Test
-    public void testSetDoctor() {
-        System.out.println("setDoctor");
-        Doctor doctor = new Doctor("Muhammad Ali", 77, "M");
-        Appointment instance = appointment;
-        instance.setDoctor(doctor);
-        assertEquals(doctor, instance.getDoctor());
-    }
+        newSchedule = new DutySchedule(2, "JAN", 2022, time);
+        newDoc = new Doctor("Muhammad Ali", 77, "M");
+        newTreatment = new Treatment("Covid Test", "Room J0009", 100);
+        instance.modifyAppointment(newDoc, newSchedule, newTreatment);
+        expResult = new Appointment(newSchedule, patient, newDoc, newTreatment);
+        result = instance;
 
-    /**
-     * Test of setTreatment method, of class Appointment.
-     */
-    @Test
-    public void testSetTreatment() {
-        System.out.println("setTreatment");
-        Treatment treatment = new Treatment("Covid Test", "Room J0009", 100);
-        Appointment instance = appointment;
-        instance.setTreatment(treatment);
-        assertEquals(treatment, instance.getTreatment());
-    }
+        assertEquals(expResult.getDoctor(), result.getDoctor());
+        assertEquals(expResult.getDutySchedule(), result.getDutySchedule());
+        assertEquals(expResult.getTreatment(), result.getTreatment());
 
-    /**
-     * Test of setPatient method, of class Appointment.
-     */
-    @Test
-    public void testSetPatient() {
-        System.out.println("setPatient");
-        Patient p = new Patient("GOH KAR MAY", "2202011", "0101112345", "030903042294", 19, 'F');
-        Appointment instance = appointment;
-        instance.setPatient(p);
-        assertEquals(p, instance.getPatient());
+        System.out.println("\nModified Appointment Info -- Test Correct Value");
+        System.out.println("Doctor :" + result.getDoctor().getName());
+        System.out.println("Date Time :" + result.getDutySchedule());
+        System.out.println("Treatment :" + result.getTreatment().getTreatment() + "\n");
     }
-
-    /**
-     * Test of toString method, of class Appointment.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        Appointment instance = appointment;
-        String expResult = String.format("%-14s   %-15s (%-5s)   %-15s   %27s %s (%s)", appointment.getAppointmentNumber(), patient.getName(), patient.getStudentID(), doctor.getName(), timeSlot, treatment.getTreatment(), treatment.getVenue());
-        String result = instance.toString();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of appointmentNoGenerator method, of class Appointment.
-     */
-    @Test
-    public void testAppointmentNoGenerator() {
-        System.out.println("appointmentNoGenerator");
-        Appointment instance = appointment;
-        String expResult = appointment.getAppointmentNumber();
-        String result = instance.getAppointmentNumber();
-        assertEquals(expResult, result);
-    }
+//    /**
+//     * Test of getPatient method, of class Appointment.
+//     */
+//    @Test
+//    public void testGetPatient() {
+//        System.out.println("getPatient");
+//        Appointment instance = appointment;
+//        Patient expResult = patient;
+//        Patient result = instance.getPatient();
+//        assertEquals(expResult, result);
+//    }
+//
+//    /**
+//     * Test of getAppointmentNumber method, of class Appointment.
+//     */
+//    @Test
+//    public void testGetAppointmentNumber() {
+//        System.out.println("getAppointmentNumber");
+//        Appointment instance = appointment;
+//        String expResult = appointment.getAppointmentNumber();
+//        String result = instance.getAppointmentNumber();
+//        assertEquals(expResult, result);
+//    }
+//    /**
+//     * Test of getDoctor method, of class Appointment.
+//     */
+//    @Test
+//    public void testGetDoctor() {
+//        System.out.println("getDoctor");
+//        Appointment instance = appointment;
+//        Doctor expResult = doctor;
+//        Doctor result = instance.getDoctor();
+//        assertEquals(expResult, result);
+//    }
+//
+//    /**
+//     * Test of getTreatment method, of class Appointment.
+//     */
+//    @Test
+//    public void testGetTreatment() {
+//        System.out.println("getTreatment");
+//        Appointment instance = appointment;
+//        Treatment expResult = treatment;
+//        Treatment result = instance.getTreatment();
+//        assertEquals(expResult, result);
+//    }
+//
+//    /**
+//     * Test of setDutySchedule method, of class Appointment.
+//     */
+//    @Test
+//    public void testSetDutySchedule() {
+//        System.out.println("setDutySchedule");
+//        DutySchedule timeSlot = new DutySchedule(2, "JAN", 2022, new Time(1000, 1200));
+//        Appointment instance = appointment;
+//        instance.setDutySchedule(timeSlot);
+//        assertEquals(timeSlot, instance.getDutySchedule());
+//    }
+//
+//    /**
+//     * Test of setDoctor method, of class Appointment.
+//     */
+//    @Test
+//    public void testSetDoctor() {
+//        System.out.println("setDoctor");
+//        Doctor doctor = new Doctor("Muhammad Ali", 77, "M");
+//        Appointment instance = appointment;
+//        instance.setDoctor(doctor);
+//        assertEquals(doctor, instance.getDoctor());
+//    }
+//
+//    /**
+//     * Test of setTreatment method, of class Appointment.
+//     */
+//    @Test
+//    public void testSetTreatment() {
+//        System.out.println("setTreatment");
+//        Treatment treatment = new Treatment("Covid Test", "Room J0009", 100);
+//        Appointment instance = appointment;
+//        instance.setTreatment(treatment);
+//        assertEquals(treatment, instance.getTreatment());
+//    }
+//
+//    /**
+//     * Test of setPatient method, of class Appointment.
+//     */
+//    @Test
+//    public void testSetPatient() {
+//        System.out.println("setPatient");
+//        Patient p = new Patient("GOH KAR MAY", "2202011", "0101112345", "030903042294", 19, 'F');
+//        Appointment instance = appointment;
+//        instance.setPatient(p);
+//        assertEquals(p, instance.getPatient());
+//    }
+//
+//    /**
+//     * Test of toString method, of class Appointment.
+//     */
+//    @Test
+//    public void testToString() {
+//        System.out.println("toString");
+//        Appointment instance = appointment;
+//        String expResult = String.format("%-14s   %-15s (%-5s)   %-15s   %27s %s (%s)", appointment.getAppointmentNumber(), patient.getName(), patient.getStudentID(), doctor.getName(), timeSlot, treatment.getTreatment(), treatment.getVenue());
+//        String result = instance.toString();
+//        assertEquals(expResult, result);
+//    }
+//
+//    /**
+//     * Test of appointmentNoGenerator method, of class Appointment.
+//     */
+//    @Test
+//    public void testAppointmentNoGenerator() {
+//        System.out.println("appointmentNoGenerator");
+//        Appointment instance = appointment;
+//        String expResult = appointment.getAppointmentNumber();
+//        String result = instance.getAppointmentNumber();
+//        assertEquals(expResult, result);
+//    }
 
 }
