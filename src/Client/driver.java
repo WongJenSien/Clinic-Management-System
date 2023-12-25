@@ -45,9 +45,12 @@ public class driver {
         selectedApp = selectAppointment(user);
         currentApp = selectedApp;
 
-        Doctor newDoc = selectedApp.getDoctor();
-        DutySchedule newSchedule = selectedApp.getDutySchedule();
-        Treatment newTreatment = selectedApp.getTreatment();
+//        Doctor newDoc = selectedApp.getDoctor();
+//        DutySchedule newSchedule = selectedApp.getDutySchedule();
+//        Treatment newTreatment = selectedApp.getTreatment();
+        Doctor newDoc = null;
+        DutySchedule newSchedule = null;
+        Treatment newTreatment = null;
 
         do {
 
@@ -74,9 +77,7 @@ public class driver {
 
         System.out.println("\nModified Information");
         System.out.println("--------------------");
-        selectedApp.setDoctor(newDoc);
-        selectedApp.setDutySchedule(newSchedule);
-        selectedApp.setTreatment(newTreatment);
+        selectedApp = editAppointment(currentApp, newDoc, newSchedule, newTreatment);
         System.out.println(selectedApp);
     }
 
@@ -401,6 +402,14 @@ public class driver {
         }
 
         return currentTreat;
+    }
+
+    public static Appointment editAppointment(Appointment currentAppointment, Doctor newDoc, DutySchedule newSchedule, Treatment newTreatment) {
+        Appointment selectedApp = currentAppointment;
+        
+        selectedApp.modifyAppointment(newDoc, newSchedule, newTreatment);
+        
+        return selectedApp;
     }
 
     public static void preInfo() {
